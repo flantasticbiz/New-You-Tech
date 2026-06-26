@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You-Tech Africa – Empowering Africa's Next Generation</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-light: #F9F9F9;
+    --bg-dark: #0B0F19;
+    --accent: #E04D14;
+    --accent-light: #FF5A1F;
+    --text-dark: #1F2937;
+    --text-muted: #4B5563;
+    --text-light: #D1D5DB;
+    --card-dark: #161B28;
+    --border-dark: #252D3D;
+    --white: #FFFFFF;
+    --font-head: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--white); color: var(--text-dark); line-height: 1.6; }
+
+  /* ═══ PAGE LOADER ═══════════════════════════════════════ */
+  .page-loader {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-dark); display: flex; align-items: center; justify-content: center;
+    z-index: 9999; animation: fadeOutUp 0.6s ease 2.4s forwards;
+  }
+
+  .loader-content {
+    text-align: center;
+  }
+
+  .logo-draw {
+    width: 80px; height: 80px; margin: 0 auto 20px;
+    background: white; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-head); font-weight: 800; color: #fff; font-size: 32px;
+    position: relative; animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .loader-text {
+    color: var(--white); font-size: 16px; font-weight: 600;
+    margin-top: 20px; letter-spacing: 2px;
+    animation: fadeIn 0.8s ease 0.3s forwards;
+    opacity: 0;
+  }
+
+  .loader-bar {
+    width: 60px; height: 3px; background: rgba(255,255,255,0.2);
+    border-radius: 2px; margin: 16px auto 0;
+    overflow: hidden;
+  }
+
+  .loader-bar::after {
+    content: ''; display: block; height: 100%;
+    background: var(--accent); border-radius: 2px;
+    animation: slideRight 1.2s ease 0.4s forwards;
+    width: 0;
+  }
+
+  @keyframes fadeOutUp {
+    to { opacity: 0; transform: translateY(-20px); }
+  }
+
+  @keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  @keyframes slideRight {
+    to { width: 100%; }
+  }
+
+  /* ═══ SCROLL ANIMATIONS ════════════════════════════════ */
+  .fade-in-up {
+    opacity: 0; transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .slide-in-left {
+    opacity: 0; transform: translateX(-30px);
+    animation: slideInLeft 0.6s ease forwards;
+  }
+
+  .slide-in-right {
+    opacity: 0; transform: translateX(30px);
+    animation: slideInRight 0.6s ease forwards;
+  }
+
+  .scale-in {
+    opacity: 0; transform: scale(0.95);
+    animation: scaleInAnim 0.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideInLeft {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes slideInRight {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes scaleInAnim {
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* ═══ STAGGER ANIMATIONS ═══════════════════════════════ */
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+
+  /* ─── NAVBAR ─────────────────────────────────────────── */
+  nav {
+    background: var(--white);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 68px;
+    border-bottom: 1px solid #F0F0F0;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 1px 8px rgba(0,0,0,.05);
+    transition: all 0.3s ease;
+  }
+
+  nav.scrolled {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(224, 77, 20, 0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+
+  .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .logo-icon {
+    width: 38px; height: 38px; background: var(--accent);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-head); font-weight: 800; color: #fff; font-size: 14px;
+    position: relative; transition: transform 0.2s ease;
+  }
+
+  .logo:hover .logo-icon { transform: scale(1.05); }
+
+  .logo-text { font-family: var(--font-head); font-weight: 700; font-size: 15px; color: var(--text-dark); }
+  .logo-text span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+  .nav-links a {
+    text-decoration: none; font-size: 14px; font-weight: 500; color: var(--text-muted);
+    position: relative; transition: color .2s;
+  }
+
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+    background: var(--accent); transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+  .btn-nav {
+    background: var(--accent); color: #fff; border: none; cursor: pointer;
+    padding: 10px 22px; border-radius: 6px; font-size: 14px; font-weight: 600;
+    font-family: var(--font-body); transition: all .2s;
+    position: relative; overflow: hidden;
+  }
+
+  .btn-nav:hover { background: #c44010; transform: translateY(-2px); }
+
+  /* Mobile Dropdown Styling & Utilities */
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s ease;
+  }
+
+  .hamburger:hover {
+    color: var(--accent);
+  }
+
+  .mobile-only {
+    display: none;
+  }
+
+  /* ─── RIPPLE EFFECT ──────────────────────────────────── */
+  .ripple {
+    position: absolute; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0); animation: rippleEffect 0.6s ease-out;
+  }
+
+  @keyframes rippleEffect {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  /* ─── HERO ───────────────────────────────────────────── */
+  .hero {
+    background: var(--white);
+    padding: 60px 5% 40px;
+    display: flex; flex-direction: column; align-items: center;
+    position: relative; overflow: hidden;
+  }
+
+  .hero::before {
+    content: ''; position: absolute; top: -50%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(224,77,20,0.05) 0%, transparent 70%);
+    z-index: 0; animation: float 6s ease-in-out infinite;
+  }
+
+  .hero > * { position: relative; z-index: 1; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #FFF4F0; border: 1px solid #FDDDD2;
+    border-radius: 50px; padding: 6px 16px 6px 6px;
+    font-size: 13px; color: var(--text-muted); margin-bottom: 24px;
+  }
+
+  .hero-avatars { display: flex; }
+  .hero-avatars img {
+    width: 26px; height: 26px; border-radius: 50%; border: 2px solid #fff;
+    display: inline-block; margin-left: -6px; overflow: hidden;
+    object-fit: cover;
+  }
+  .hero-avatars img:first-child { margin-left: 0; }
+
+  .hero h1 {
+    font-family: var(--font-head); font-size: clamp(32px, 4.5vw, 52px);
+    font-weight: 800; color: var(--text-dark); text-align: center;
+    line-height: 1.15; max-width: 700px; margin-bottom: 18px;
+  }
+
+  .hero h1 .shimmer {
+    background: linear-gradient(90deg, var(--accent) 0%, #FF7A33 50%, var(--accent) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmerText 3s linear infinite;
+  }
+
+  @keyframes shimmerText {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+  }
+
+  .hero-sub {
+    font-size: 16px; color: var(--text-muted); text-align: center;
+    max-width: 560px; margin-bottom: 28px; line-height: 1.7;
+  }
+
+  .hero-btns { display: flex; gap: 14px; margin-bottom: 40px; }
+
+  .btn-primary, .btn-outline {
+    position: relative; overflow: hidden;
+  }
+
+  .btn-primary {
+    background: var(--accent); color: #fff; border: none; cursor: pointer;
+    padding: 12px 26px; border-radius: 7px; font-size: 15px; font-weight: 600;
+    font-family: var(--font-body); transition: all .2s;
+  }
+
+  .btn-primary:hover { background: #c44010; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(224, 77, 20, 0.3); }
+
+  .btn-outline {
+    background: transparent; color: var(--accent);
+    border: 1.5px solid var(--accent); cursor: pointer;
+    padding: 12px 26px; border-radius: 7px; font-size: 15px; font-weight: 600;
+    font-family: var(--font-body); transition: all .2s;
+  }
+
+  .btn-outline:hover { background: #FFF4F0; transform: translateY(-2px); }
+
+  .hero-img-wrap {
+    width: 100%; max-width: 1020px; display: flex; justify-content: center;
+    position: relative; overflow: hidden; margin-top: 20px;
+  }
+
+  /* ═══ STAND-ALONE HERO IMAGE CAROUSEL STYLES ═══ */
+  .carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 10px 0;
+  }
+
+  .carousel-track {
+    display: flex;
+    width: calc(240px * 20);
+    animation: endlessCarouselScroll 25s linear infinite;
+  }
+
+  .carousel-slide {
+    width: 270px;
+    height: 250px;
+    flex-shrink: 0;
+    margin: 0 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #E5E7EB;
+    transition: transform 0.3s ease;
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  @keyframes endlessCarouselScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-240px * 10)); }
+  }
+
+  .carousel-container:hover .carousel-track {
+    animation-play-state: paused;
+  }
+
+  /* ─── WHO WE ARE ─────────────────────────────────────── */
+  .who {
+    background: var(--white);
+    padding: 70px 5%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+
+  .section-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 14px;
+  }
+
+  .who h2 {
+    font-family: var(--font-head); font-size: clamp(22px,2.5vw,30px);
+    font-weight: 800; color: var(--text-dark); margin-bottom: 16px; line-height: 1.3;
+  }
+
+  .who p { font-size: 15px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.75; }
+
+  .orange-link {
+    color: var(--accent); font-size: 14px; font-weight: 600; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;
+    position: relative; transition: color 0.2s;
+  }
+
+  .orange-link::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 2px;
+    background: var(--accent); transition: width 0.3s ease;
+  }
+
+  .orange-link:hover { color: #c44010; }
+  .orange-link:hover::after { width: 100%; }
+
+  .who-img {
+    width: 100%; height: 340px; border-radius: 14px; overflow: hidden;
+    background: linear-gradient(135deg,#f5a623 0%,#e04d14 50%,#1a1a2e 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; transition: transform 0.3s ease;
+  }
+
+  .who-img:hover { transform: scale(1.02); }
+
+  .who-img img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  .who-img-placeholder {
+    width: 90%; height: 90%; background: rgba(255,255,255,.1);
+    border-radius: 10px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; color: #fff;
+  }
+
+  /* ─── SERVICES ───────────────────────────────────────── */
+  .services {
+    background: var(--bg-dark); padding: 70px 5%;
+    position: relative; overflow: hidden;
+  }
+
+  .services::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; pointer-events: none;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                                rgba(224, 77, 20, 0.05) 0%, 
+                                transparent 50%);
+    opacity: 0; transition: opacity 0.3s ease;
+  }
+
+  .services.glow::before { opacity: 1; }
+
+  .services-header { text-align: center; margin-bottom: 44px; }
+  .services-header .section-label { color: var(--accent); }
+  .services-header h2 {
+    font-family: var(--font-head); font-size: clamp(24px,3vw,36px);
+    font-weight: 800; color: var(--white); margin-bottom: 10px;
+  }
+  .services-header p { color: #9CA3AF; font-size: 15px; }
+
+  .services-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; position: relative; z-index: 1; }
+
+  .svc-card {
+    background: var(--card-dark); border: 1px solid var(--border-dark);
+    border-radius: 12px; padding: 28px 22px;
+    transition: all .3s ease;
+    cursor: pointer;
+  }
+
+  .svc-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 50px rgba(224, 77, 20, 0.25);
+  }
+
+  .svc-icon {
+    width: 40px; height: 40px; background: rgba(224,77,20,.15);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px; font-size: 18px; transition: transform 0.3s ease;
+  }
+
+  .svc-card:hover .svc-icon { transform: scale(1.1); }
+
+  .svc-card h3 { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+  .svc-card p { font-size: 13px; color: #9CA3AF; line-height: 1.65; margin-bottom: 16px; }
+  .svc-card .orange-link { font-size: 13px; }
+
+  /* ─── PROGRAMS / COURSES ─────────────────────────────── */
+  .courses { background: var(--white); padding: 70px 5%; }
+  .courses-header { text-align: center; margin-bottom: 44px; }
+  .courses-header h2 {
+    font-family: var(--font-head); font-size: clamp(22px,3vw,34px);
+    font-weight: 800; color: var(--text-dark); margin-bottom: 8px;
+  }
+  .courses-header p { font-size: 15px; color: var(--text-muted); max-width: 540px; margin: 0 auto; }
+
+  .courses-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+
+  .course-card {
+    border-radius: 12px; overflow: hidden; background: var(--white); border: 1px solid #E5E7EB;
+    transition: all .3s ease;
+  }
+
+  .course-card:hover {
+    box-shadow: 0 12px 40px rgba(0,0,0,.12);
+    transform: translateY(-6px);
+  }
+
+  .course-img {
+    height: 140px; overflow: hidden;
+    background: linear-gradient(135deg,#1a1a2e,#2d3748);
+    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 28px;
+    object-fit: cover;
+  }
+
+  .course-img img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  .course-body { padding: 18px 16px; }
+  .course-body h3 { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+  .course-body p { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.6; }
+  .course-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .8px;
+    color: var(--text-muted); border: 1px solid #D1D5DB;
+    border-radius: 4px; padding: 3px 8px; text-transform: uppercase;
+  }
+
+  /* ─── PRACTICAL LEARNING ─────────────────────────────── */
+  .practical { background: var(--bg-light); padding: 70px 5%; }
+  .practical-header { text-align: center; margin-bottom: 44px; }
+  .practical-header h2 {
+    font-family: var(--font-head); font-size: clamp(22px,3vw,34px);
+    font-weight: 800; color: var(--text-dark); margin-bottom: 8px;
+  }
+  .practical-header p { font-size: 15px; color: var(--text-muted); max-width: 500px; margin: 0 auto; }
+
+  .practical-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+
+  .prog-card {
+    background: var(--white); border-radius: 14px; overflow: hidden; border: 1px solid #E5E7EB;
+    transition: all .3s ease;
+  }
+
+  .prog-card:hover {
+    box-shadow: 0 12px 40px rgba(0,0,0,.1);
+    transform: translateY(-6px);
+  }
+
+  .prog-img {
+    height: 170px;
+    background: linear-gradient(135deg,#1a1a2e,#2d3748);
+    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 32px;
+    overflow: hidden;
+  }
+
+  .prog-img img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  .prog-body { padding: 20px 18px; }
+  .prog-body h3 { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+  .prog-body p { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.65; }
+
+  /* ─── STATS ──────────────────────────────────────────── */
+  .stats { background: var(--white); padding: 64px 5%; text-align: center; }
+  .stats-subhead {
+    font-size: 16px; color: var(--text-muted); max-width: 520px;
+    margin: 0 auto 48px; line-height: 1.7;
+  }
+  .stats-subhead strong { color: var(--text-dark); }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+
+  .stat-item { padding: 10px; }
+
+  .stat-num {
+    font-family: var(--font-head); font-size: clamp(42px,5vw,64px);
+    font-weight: 800; color: var(--text-dark); line-height: 1;
+    counter-increment: stat-counter;
+  }
+
+  .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+  .stats .section-label { margin-bottom: 14px; }
+
+  /* ─── EVENTS ─────────────────────────────────────────── */
+  .events { background: var(--white); padding: 64px 5%; }
+  .events-header { text-align: center; margin-bottom: 40px; }
+  .events-header h2 {
+    font-family: var(--font-head); font-size: clamp(22px,3vw,32px);
+    font-weight: 800; color: var(--text-dark);
+  }
+
+  .events-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+
+  .event-card {
+    border-radius: 12px; overflow: hidden; border: 1px solid #E5E7EB;
+    background: #0B0F19; height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 10px; position: relative;
+    transition: all 0.3s ease;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .event-card img {
+    object-fit: contain;
+  }
+
+  .event-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+
+  /* .event-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5); z-index: 1;
+  }
+
+  .event-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: #E53E3E; color: #fff; font-size: 10px; font-weight: 700;
+    padding: 3px 8px; border-radius: 4px; display: flex; align-items: center; gap: 5px;
+    z-index: 2;
+  }
+  .event-badge::before { content: '●'; font-size: 8px; }
+  .event-title { color: #fff; font-size: 15px; font-weight: 700; text-align: center; padding: 0 16px; font-family: var(--font-head); position: relative; z-index: 2; }
+  .event-sub { color: #9CA3AF; font-size: 12px; text-align: center; position: relative; z-index: 2; }
+  .event-logo { background: rgba(255,255,255,.08); border-radius: 8px; padding: 8px 16px; color: #fff; font-size: 22px; font-weight: 800; position: relative; z-index: 2; } */
+
+  /* ─── TESTIMONIALS ───────────────────────────────────── */
+  .testimonials { background: var(--white); padding: 70px 5%; }
+  .testi-header { text-align: center; margin-bottom: 40px; }
+  .testi-header h2 { font-family: var(--font-head); font-size: clamp(22px,3vw,32px); font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
+  .testi-header p { font-size: 15px; color: var(--text-muted); max-width: 480px; margin: 0 auto; }
+
+  /* TESTIMONIAL CAROUSEL STYLES */
+  .testi-carousel-wrapper {
+    position: relative;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .testi-carousel-container {
+    overflow: hidden;
+    border-radius: 18px;
+  }
+
+  .testi-carousel-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .testi-carousel-track:hover {
+    animation-play-state: paused;
+  }
+
+  .testi-card {
+    background: #FAFAFA; border-radius: 18px; padding: 36px;
+    box-shadow: 0 4px 30px rgba(0,0,0,.08); border: 1px solid #F0F0F0;
+    display: grid; grid-template-columns: 180px 1fr; gap: 32px; align-items: start;
+    position: relative;
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+
+  .testi-portrait {
+    width: 180px; height: 200px; border-radius: 12px; overflow: hidden;
+    background: linear-gradient(135deg,#1a1a2e,#2d3748);
+    display: flex; align-items: center; justify-content: center; font-size: 60px;
+  }
+
+  .testi-portrait img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  .stars { color: var(--accent); font-size: 18px; letter-spacing: 2px; margin-bottom: 14px; }
+  .testi-quote {
+    font-size: 15px; color: var(--text-muted); line-height: 1.8;
+    font-style: italic; margin-bottom: 20px;
+  }
+
+  .testi-name { font-family: var(--font-head); font-size: 15px; font-weight: 700; color: var(--text-dark); }
+  .testi-role { font-size: 13px; color: var(--text-muted); }
+
+  /* CAROUSEL NAVIGATION ARROWS */
+  .testi-arrows {
+    display: flex;
+    gap: 12px;
+    position: absolute;
+    bottom: -60px;
+    right: 0;
+    z-index: 10;
+  }
+
+  .testi-arrow {
+    width: 40px; height: 40px; background: var(--accent); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; color: #fff;
+    cursor: pointer; font-size: 18px; border: none;
+    transition: all 0.3s ease;
+  }
+
+  .testi-arrow:hover { 
+    transform: scale(1.1); 
+    box-shadow: 0 8px 20px rgba(224, 77, 20, 0.3); 
+  }
+
+  .testi-arrow.prev::before {
+    content: '‹';
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .testi-arrow.next::before {
+    content: '›';
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .testi-dot-indicator {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  .testi-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #D1D5DB;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .testi-dot.active {
+    background: var(--accent);
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* ─── THREE PATHS ────────────────────────────────────── */
+  .paths { background: var(--white); padding: 70px 5%; }
+  .paths-header { text-align: center; margin-bottom: 44px; }
+  .paths-header h2 { font-family: var(--font-head); font-size: clamp(20px,2.5vw,30px); font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
+  .paths-header p { font-size: 15px; color: var(--text-muted); }
+
+  .paths-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+
+  .path-card {
+    border-radius: 14px; overflow: hidden; border: 1px solid #E5E7EB; background: var(--white);
+    transition: all .3s ease;
+  }
+
+  .path-card:hover {
+    box-shadow: 0 12px 40px rgba(0,0,0,.1);
+    transform: translateY(-6px);
+  }
+
+  .path-img { 
+    height: 180px; 
+    background: linear-gradient(135deg,#1a1a2e,#374151); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 40px;
+    overflow: hidden;
+  }
+
+  .path-img img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  .path-body { padding: 20px 18px; }
+  .path-body h3 { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+  .path-body p { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.65; }
+
+  /* ─── FAQ ────────────────────────────────────────────── */
+  .faq { background: var(--white); padding: 70px 5%; }
+  .faq-header { text-align: center; margin-bottom: 44px; }
+  .faq-header h2 { font-family: var(--font-head); font-size: clamp(20px,2.5vw,30px); font-weight: 800; color: var(--text-dark); }
+
+  .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+
+  .faq-item { border: 1px solid #E5E7EB; border-radius: 10px; overflow: hidden; }
+
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 22px; cursor: pointer; background: var(--white);
+    font-size: 15px; font-weight: 500; color: var(--text-dark);
+    transition: all .15s;
+  }
+
+  .faq-q:hover { background: #F9F9F9; }
+
+  .faq-icon { font-size: 18px; color: var(--text-muted); transition: transform .4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+  .faq-a {
+    padding: 0 22px; max-height: 0; overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), padding 0.4s ease;
+    font-size: 14px; color: var(--text-muted); line-height: 1.7;
+  }
+
+  .faq-item.open .faq-a { max-height: 300px; padding: 0 22px 18px; }
+  .faq-item.open .faq-icon { transform: rotate(180deg); }
+
+  /* ─── FINAL CTA ──────────────────────────────────────── */
+  .final-cta { background: var(--white); padding: 64px 5%; }
+  .cta-box {
+    background: linear-gradient(135deg, #FFF4F0 0%, #FFE8DF 100%);
+    border-radius: 20px; padding: 56px 40px; text-align: center;
+    border: 1px solid #FDDDD2; max-width: 680px; margin: 0 auto;
+  }
+
+  .cta-box .section-label { margin-bottom: 14px; }
+  .cta-box h2 { font-family: var(--font-head); font-size: clamp(22px,3vw,32px); font-weight: 800; color: var(--text-dark); margin-bottom: 14px; }
+  .cta-box p { font-size: 15px; color: var(--text-muted); margin-bottom: 28px; max-width: 420px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+  .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ─── FOOTER ─────────────────────────────────────────── */
+  footer { background: var(--bg-dark); padding: 60px 5% 0; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; padding-bottom: 48px; }
+  .footer-brand p { font-size: 13px; color: #9CA3AF; line-height: 1.7; margin: 14px 0 20px; }
+  .social-icons { display: flex; gap: 12px; margin-top: 10px; }
+  .social-icons a {
+    width: 40px; height: 40px; border-radius: 8px; background: rgba(224,77,20,0.15);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent); text-decoration: none; font-size: 16px; font-weight: 600;
+    transition: all .3s ease;
+    border: 1.5px solid rgba(224,77,20,0.2);
+  }
+  .social-icons a:hover { 
+    background: var(--accent); 
+    color: #fff; 
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(224, 77, 20, 0.3);
+  }
+  .footer-col h4 { font-family: var(--font-head); font-size: 13px; font-weight: 700; color: var(--white); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a { font-size: 13px; color: #9CA3AF; text-decoration: none; transition: color .2s; }
+  .footer-col ul li a:hover { color: var(--accent); }
+  .footer-col ul li { font-size: 13px; color: #9CA3AF; display: flex; align-items: center; gap: 8px; }
+  .footer-bottom {
+    border-top: 1px solid var(--border-dark); padding: 18px 0;
+    text-align: center; font-size: 12px; color: #6B7280;
+  }
+  .footer-logo { display: flex; align-items: center; gap: 8px; }
+  .footer-logo-icon {
+    width: 32px; height: 32px; background: var(--accent); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-head); font-weight: 800; color: #fff; font-size: 12px;
+  }
+  .footer-logo-text { font-family: var(--font-head); font-weight: 700; font-size: 14px; color: var(--white); }
+  .footer-logo-text span { color: var(--accent); }
+
+  /* ═══ MODAL STYLES ═════════════════════════════════════ */
+  .modal {
+    display: none; position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%; background: rgba(0,0,0,0.5);
+    z-index: 10000; align-items: center; justify-content: center;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modal.active { display: flex; }
+
+  .modal-content {
+    background: var(--white); border-radius: 16px;
+    padding: 48px 40px; max-width: 500px; width: 90%;
+    max-height: 90vh; overflow-y: auto;
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .modal-close {
+    position: absolute; top: 20px; right: 20px;
+    background: none; border: none; font-size: 24px;
+    cursor: pointer; color: var(--text-muted);
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--text-dark); }
+
+  .modal-header {
+    margin-bottom: 28px; padding-right: 30px;
+  }
+
+  .modal-header h2 {
+    font-family: var(--font-head); font-size: 28px; font-weight: 800;
+    color: var(--text-dark); margin-bottom: 8px;
+  }
+
+  .modal-description {
+    font-size: 14px; color: var(--text-muted); line-height: 1.6;
+    margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid #E5E7EB;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    display: block; font-size: 13px; font-weight: 600;
+    color: var(--text-dark); margin-bottom: 6px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%; padding: 10px 12px; border: 1px solid #D1D5DB;
+    border-radius: 6px; font-family: var(--font-body); font-size: 14px;
+    transition: all 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none; border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(224, 77, 20, 0.1);
+  }
+
+  .form-group input:invalid:not(:placeholder-shown),
+  .form-group select:invalid:not(:placeholder-shown),
+  .form-group textarea:invalid:not(:placeholder-shown) {
+    border-color: #dc2626;
+  }
+
+  .form-group textarea {
+    resize: vertical; min-height: 80px;
+  }
+
+  .form-submit {
+    width: 100%; background: var(--accent); color: #fff;
+    border: none; padding: 12px 20px; border-radius: 7px;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    font-family: var(--font-body); transition: all 0.2s;
+    margin-top: 8px;
+  }
+
+  .form-submit:hover {
+    background: #c44010;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(224, 77, 20, 0.3);
+  }
+
+  .form-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .form-submit.success {
+    background: #22c55e;
+    color: #fff;
+  }
+
+  .form-submit.success:hover {
+    background: #16a34a;
+  }
+
+  /* ═══ TOAST NOTIFICATION STYLES ════════════════════════ */
+  .notification-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10001;
+    padding: 20px 24px;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    animation: slideInRight 0.4s ease forwards;
+    max-width: 400px;
+  }
+
+  .notification-toast.success {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+  }
+
+  .notification-toast.error {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+  }
+
+  .notification-toast.info {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    color: #1e40af;
+    border: 1px solid #93c5fd;
+  }
+
+  .notification-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .notification-close:hover {
+    opacity: 1;
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideOutRight {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+  }
+
+  .notification-toast.fade-out {
+    animation: slideOutRight 0.4s ease forwards;
+  }
+
+  /* ─── RESPONSIVE ─────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .services-grid, .courses-grid { grid-template-columns: repeat(2,1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 4%; }
+    
+    .hamburger {
+      display: block;
+    }
+
+    .btn-nav-desktop {
+      display: none;
+    }
+
+    .mobile-only {
+      display: block;
+      width: 100%;
+    }
+
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 68px;
+      left: 0;
+      width: 100%;
+      background: var(--white);
+      border-bottom: 1px solid #F0F0F0;
+      padding: 24px 5%;
+      gap: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      z-index: 99;
+    }
+
+    .nav-links.active {
+      display: flex;
+    }
+
+    .nav-links li {
+      width: 100%;
+      text-align: center;
+    }
+
+    .nav-links li a {
+      display: block;
+      padding: 8px 0;
+    }
+
+    .nav-links li button {
+      width: 100%;
+      padding: 12px 20px;
+    }
+
+    .who { grid-template-columns: 1fr; }
+    .who-img { order: -1; }
+    .services-grid, .courses-grid, .practical-grid, .events-grid, .paths-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(3,1fr); }
+    .testi-card { grid-template-columns: 1fr; }
+    .testi-portrait { width: 100%; height: 220px; }
+    .testi-arrows {
+      position: relative;
+      bottom: auto;
+      right: auto;
+      justify-content: center;
+      margin-top: 24px;
+    }
+    .testi-dot-indicator {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      transform: none;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .modal-content { padding: 40px 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .hero-btns { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ PAGE LOADER ═════════════════════════════════════════ -->
+<div class="page-loader">
+  <div class="loader-content">
+    <div class="logo-draw">
+      <img src="./images/Utech with tagline.png" class="logo" alt="" width="100" height="100">
+    </div>
+    <p class="loader-text">Loading Experience</p>
+    <div class="loader-bar"></div>
+  </div>
+</div>
+
+<!-- ══ NAVBAR ══════════════════════════════════════════════ -->
+<nav>
+  <a class="navbar-brand" href="" title="logo">
+      <img src="./images/Utech with tagline.png" class="logo" alt="" width="100" height="100">
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="active" onclick="closeMobileMenu()">Home</a></li>
+    <li><a href="about-us.html" onclick="closeMobileMenu()">About Us</a></li>
+    <li><a href="service.html" onclick="closeMobileMenu()">Services</a></li>
+    <li><a href="projects.html" onclick="closeMobileMenu()">Projects</a></li>
+    <li><a href="contact.html" onclick="closeMobileMenu()">Contact Us</a></li>
+    <li class="mobile-only">
+      <button class="btn-nav" onclick="openApplicationForm(); closeMobileMenu();">Apply Now</button>
+    </li>
+  </ul>
+  <button class="btn-nav btn-nav-desktop" onclick="openApplicationForm()">Apply Now</button>
+  <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</nav>
+
+<!-- ══ HERO ═════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-badge fade-in-up">
+    <div class="hero-avatars">
+      <img src="/images/You-tech-imgs/ufuoma.png" alt="learner">
+      <img src="/images/You-tech-imgs/test-img.jpg" alt="learner">
+      <img src="/images/You-tech-imgs/jesse.jpg" alt="learner">
+      <img src="/images/You-tech-imgs/ifeanyi.jpg" alt="learner">
+    </div>
+    <span>Join 100+ learners across 6+ African countries</span>
+  </div>
+  <h1 class="fade-in-up stagger-1"><span class="shimmer">E</span><span style="color:var(--text-dark)">mpowering </span> <span class="shimmer">Africa's</span><br>Next Generation of Tech Innovators</h1>
+  <p class="hero-sub fade-in-up stagger-2">We equip young Africans with the skills, experience, and mentorship need to thrive in technology and innovation.</p>
+  <div class="hero-btns fade-in-up stagger-3">
+    <button class="btn-primary" onclick="openApplicationForm()">Join our community</button>
+    <button class="btn-outline">Explore our Programs</button>
+  </div>
+  <div class="hero-img-wrap fade-in-up stagger-4">
+    <!-- Clean, stand-alone endless image slider -->
+    <div class="carousel-container">
+      <div class="carousel-track">
+        <!-- 10 distinct high-resolution technology and education images -->
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_Esu7vO5THyE.png" alt="Workspace"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_9jCeCFGnnzg.png" alt="Team meeting"></div>
+        <div class="carousel-slide"><img src="/images/tech-img03.jpg" alt="Learning digital"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_Q69veNk1iJQ.png" alt="Presentation"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_zvmZiw3vdsQ.png" alt="Tech workspace"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_6rrIT4YcqoI.png" alt="Collaborative discussion"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_FJ5e_2f96h4.png" alt="Coding on laptop"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_Bv2FCJoh8XM.png" alt="Modern developer"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_N93lD7Pn7Zw.png" alt="Digital collaboration"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_m_HRfLhgABo.png" alt="Fullstack code development"></div>
+
+        <!-- Duplicated images for a seamless loop -->
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_Esu7vO5THyE.png" alt="Workspace"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_9jCeCFGnnzg.png" alt="Team meeting"></div>
+        <div class="carousel-slide"><img src="/images/tech-img03.jpg" alt="Learning digital"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_Q69veNk1iJQ.png" alt="Presentation"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_zvmZiw3vdsQ.png" alt="Tech workspace"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_6rrIT4YcqoI.png" alt="Collaborative discussion"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_FJ5e_2f96h4.png" alt="Coding on laptop"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_Bv2FCJoh8XM.png" alt="Modern developer"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_N93lD7Pn7Zw.png" alt="Digital collaboration"></div>
+        <div class="carousel-slide"><img src="/images/figma-img/unsplash_m_HRfLhgABo.png" alt="Fullstack code development"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHO WE ARE ════════════════════════════════════════════ -->
+<section class="who">
+  <div class="fade-in-up">
+    <p class="section-label" ><span class="shimmer">WHO WE ARE</span></p>
+    <h2>You-Tech Africa is a tech-driven capacity-building organisation</h2>
+    <p>Focused on equipping young Africans with the skills, experience, and support they need to succeed in today's digital world.</p>
+    <p>We go beyond traditional learning by combining practical training, mentorship, and real-world projects to prepare you for actual career opportunities in tech.</p>
+    <a href="#" class="orange-link">Learn More About Us →</a>
+  </div>
+  <div class="who-img fade-in-up stagger-1">
+    <img src="/images/You-tech-imgs/IMG_2588.jpeg" alt="Professional at work">
+  </div>
+</section>
+
+<!-- ══ OUR SERVICES ══════════════════════════════════════════ -->
+<section class="services">
+  <div class="services-header fade-in-up">
+    <p class="section-label">WHAT WE OFFER</p>
+    <h2>Our Services</h2>
+    <p>Everything you need to launch and grow your tech career and business.</p>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card fade-in-up stagger-1" onclick="openApplicationForm()" style="cursor: pointer;">
+      <div class="svc-icon">🎓</div>
+      <h3>Training</h3>
+      <p>Access expert-backed training experiences designed to give you industry-ready skills in today's most in-demand tech roles.</p>
+      <a href="about.html" class="orange-link" onclick="event.preventDefault(); openApplicationForm();">Learn More →</a>
+    </div>
+    <div class="svc-card fade-in-up stagger-2" onclick="openApplicationForm()" style="cursor: pointer;">
+      <div class="svc-icon">🤝</div>
+      <h3>Mentorship / Internship</h3>
+      <p>Connect with seasoned professionals and work on real projects through our Mentorship and Internship placements.</p>
+      <a href="about.html" class="orange-link" onclick="event.preventDefault(); openApplicationForm();">Learn More →</a>
+    </div>
+    <div class="svc-card fade-in-up stagger-3" onclick="openApplicationForm()" style="cursor: pointer;">
+      <div class="svc-icon">🔍</div>
+      <h3>Recruitment Services</h3>
+      <p>We connect vetted talent with tech-first organizations bridging the gap between talent and opportunity.</p>
+      <a href="about.html" class="orange-link" onclick="event.preventDefault(); openApplicationForm();">Learn More →</a>
+    </div>
+    <div class="svc-card fade-in-up stagger-4" onclick="openApplicationForm()" style="cursor: pointer;">
+      <div class="svc-icon">⚙️</div>
+      <h3>IT & Product Services</h3>
+      <p>We help businesses build and ship digital products — from web applications and design systems to end-to-end product development.</p>
+      <a href="about.html" class="orange-link" onclick="event.preventDefault(); openApplicationForm();">Learn More →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COURSES ═══════════════════════════════════════════════ -->
+<section class="courses">
+  <div class="courses-header fade-in-up">
+    <p class="section-label">LEARN IN-DEMAND TECH SKILLS</p>
+    <h2>Start with a Skill That Gets You Hired</h2>
+    <p>Our flagship programmes are built around the roles companies are recruiting for right now across Africa and beyond.</p>
+  </div>
+  <div class="courses-grid">
+    <div class="course-card fade-in-up stagger-1">
+      <div class="course-img">
+        <img src="/images/figma-img/unsplash_6rrIT4YcqoI.png" alt="Product Design">
+      </div>
+      <div class="course-body">
+        <h3>Product Design</h3>
+        <p>Learn UX research, wireframing, prototyping, and design thinking to build world-class portfolios.</p>
+        <div class="course-tags">
+          <span class="tag">12 Weeks</span><span class="tag">Online</span><span class="tag">Hybrid</span>
+        </div>
+        <a href="#" class="orange-link" style="font-size:13px" onclick="event.preventDefault(); openApplicationForm('Product Design');">Apply Now →</a>
+      </div>
+    </div>
+    <div class="course-card fade-in-up stagger-2">
+      <div class="course-img">
+        <img src="/images/tech-imgF.jpeg" alt="Frontend Development">
+      </div>
+      <div class="course-body">
+        <h3>Frontend Development</h3>
+        <p>Master HTML, CSS, JavaScript and modern frameworks. Build accessible and responsive web apps.</p>
+        <div class="course-tags">
+          <span class="tag">16 Weeks</span><span class="tag">Online</span><span class="tag">Hybrid</span>
+        </div>
+        <a href="#" class="orange-link" style="font-size:13px" onclick="event.preventDefault(); openApplicationForm('Frontend Development');">Apply Now →</a>
+      </div>
+    </div>
+    <div class="course-card fade-in-up stagger-3">
+      <div class="course-img">
+        <img src="/images/tech-imgJ.webp" alt="Data Analysis">
+      </div>
+      <div class="course-body">
+        <h3>Data Analysis</h3>
+        <p>Learn to collect, clean and visualize data using Excel, SQL, Python — and turn raw data into insights.</p>
+        <div class="course-tags">
+          <span class="tag">12 Weeks</span><span class="tag">Online</span><span class="tag">Hybrid</span>
+        </div>
+        <a href="#" class="orange-link" style="font-size:13px" onclick="event.preventDefault(); openApplicationForm('Data Analysis');">Apply Now →</a>
+      </div>
+    </div>
+    <div class="course-card fade-in-up stagger-4">
+      <div class="course-img">
+        <img src="images/tech-imgG.webp" alt="Product Management">
+      </div>
+      <div class="course-body">
+        <h3>Product Management</h3>
+        <p>Learn product strategy, data-informed planning, and stakeholder communication while solving real-world problems.</p>
+        <div class="course-tags">
+          <span class="tag">10 Weeks</span><span class="tag">Online</span><span class="tag">Trainee</span>
+        </div>
+        <a href="#" class="orange-link" style="font-size:13px" onclick="event.preventDefault(); openApplicationForm('Product Management');">Apply Now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRACTICAL LEARNING ════════════════════════════════════ -->
+<section class="practical">
+  <div class="practical-header fade-in-up">
+    <p class="section-label">OUR PROGRAMMES</p>
+    <h2>Practical Learning Experiences</h2>
+    <p>Explore practical learning experiences designed to help you gain skills, build confidence, and become job-ready.</p>
+  </div>
+  <div class="practical-grid">
+    <div class="prog-card fade-in-up stagger-1">
+      <div class="prog-img">
+        <img src="/images/tech-imgA.jpg" alt="Mini Internship Program">
+      </div>
+      <div class="prog-body">
+        <h3>Mini Internship Program</h3>
+        <p>Work on real products, collaborate with teams, and build a portfolio that showcases what you can do.</p>
+        <a href="#" class="orange-link">Learn More →</a>
+      </div>
+    </div>
+    <div class="prog-card fade-in-up stagger-2">
+      <div class="prog-img">
+        <img src="/images/tech-imgC.jpg" alt="Training & Workshops">
+      </div>
+      <div class="prog-body">
+        <h3>Training &amp; Workshops</h3>
+        <p>Get hands-on instruction in tech design, frontend development, product management, and more.</p>
+        <a href="#" class="orange-link">Learn More →</a>
+      </div>
+    </div>
+    <div class="prog-card fade-in-up stagger-3">
+      <div class="prog-img">
+        <img src="/images/tech-imgD.jpg" alt="Mentorship & Coaching">
+      </div>
+      <div class="prog-body">
+        <h3>Mentorship &amp; Coaching</h3>
+        <p>Get guidance from experienced professionals who will support your growth, clarify career paths, and help you land roles.</p>
+        <a href="#" class="orange-link">Learn More →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS ═════════════════════════════════════════════════ -->
+<section class="stats">
+  <p class="section-label fade-in-up" style="text-align:center">OUR IMPACT</p>
+  <p class="stats-subhead fade-in-up stagger-1"><strong>We measure success by the growth</strong> and achievements of our community.</p>
+  <div class="stats-grid">
+    <div class="stat-item fade-in-up stagger-2">
+      <div class="stat-num" data-target="300">0</div>
+      <div class="stat-label">Students Trained</div>
+    </div>
+    <div class="stat-item fade-in-up stagger-3">
+      <div class="stat-num" data-target="100">0</div>
+      <div class="stat-label">Interns placed in real-world projects</div>
+    </div>
+    <div class="stat-item fade-in-up stagger-4">
+      <div class="stat-num" data-target="80">0</div>
+      <div class="stat-label">Career advancement rate among participants</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EVENTS ════════════════════════════════════════════════ -->
+<section class="events">
+  <div class="events-header fade-in-up">
+    <p class="section-label">EVENT HIGHLIGHTS</p>
+    <h2>Take a Look at Some of Our Past Events</h2>
+  </div>
+  <div class="events-grid">
+    <div class="event-card fade-in-up stagger-1" style="background-image: url('/images/You-tech-imgs/Screenshot\ 2026-02-07\ at\ 6.28.31\ PM.png');">
+      <div>
+        <img src="/images/You-tech-imgs/Screenshot\ 2026-02-07\ at\ 6.28.31\ PM.png" alt="">
+      </div>
+    </div>
+    <div class="event-card fade-in-up stagger-2" style="background-image: url('/images/You-tech-imgs/Screenshot\ 2026-01-31\ at\ 6.04.16\ PM.png');">
+      <div>
+        <img src="/images/You-tech-imgs/Screenshot\ 2026-02-07\ at\ 6.28.31\ PM.png" alt="">
+      </div>
+      <!-- <div class="event-title">Tech Career in Africa Panel</div>
+      <div class="event-sub">Live Stream · Open to all</div> -->
+    </div>
+    <div class="event-card fade-in-up stagger-3" style="background-image: url('/images/You-tech-imgs/Screenshot\ 2026-02-07\ at\ 6.21.42\ PM.png');">
+      <!-- <div class="event-logo">KOLOX</div>
+      <div class="event-title">Design Sprint Workshop</div>
+      <div class="event-sub">Virtual · Community Event</div> -->
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS WITH CAROUSEL ════════════════════════════ -->
+<section class="testimonials">
+  <div class="testi-header fade-in-up">
+    <p class="section-label">TESTIMONIALS</p>
+    <h2>What Our Students Say</h2>
+    <p>Our learners are building portfolios, securing opportunities, and growing into confident tech professionals.</p>
+  </div>
+  
+  <div class="testi-carousel-wrapper fade-in-up stagger-1">
+    <div class="testi-carousel-container">
+      <div class="testi-carousel-track" id="testiCarouselTrack">
+        <!-- TESTIMONIAL 1 -->
+        <div class="testi-card">
+          <div class="testi-portrait">
+            <img src="/images/You-tech-imgs/test-img.jpg" alt="Student 1">
+          </div>
+          <div>
+            <div class="stars">★★★★★</div>
+            <blockquote class="testi-quote">"Honestly, before joining You-Tech Africa, I didn't know much about UX. But now I know the real meaning of product design and UX, and I'm motivated to continue learning deeply on my own through personal study and practice, all thanks to You-Tech Afica."</blockquote>
+            <div class="testi-name">Chima Worlu</div>
+            <div class="testi-role">Product Design Alumni</div>
+          </div>
+        </div>
+
+        <!-- TESTIMONIAL 2 -->
+        <div class="testi-card">
+          <div class="testi-portrait">
+            <img src="/images/You-tech-imgs/ifeanyi.jpg" alt="Student 2">
+          </div>
+          <div>
+            <div class="stars">★★★★★</div>
+            <blockquote class="testi-quote">"The frontend development program gave me practical skills that I immediately applied in my projects. I went from knowing nothing about coding to building responsive websites in just 16 weeks!"</blockquote>
+            <div class="testi-name">Ifeanyi Emmanuel</div>
+            <div class="testi-role">Frontend Developer</div>
+          </div>
+        </div>
+
+        <!-- TESTIMONIAL 3 -->
+        <div class="testi-card">
+          <div class="testi-portrait">
+            <img src="/images/You-tech-imgs/ufuoma.png" alt="Student 3">
+          </div>
+          <div>
+            <div class="stars">★★★★★</div>
+            <blockquote class="testi-quote">"You-Tech Africa has been an important part of my growth journey as a product designer. Through hands-on projects, collaboration , and mentorship, I gained practical experience that helped me strengthen my skills and approach design with more confidence."</blockquote>
+            <div class="testi-name">Comfort Ologbo</div>
+            <div class="testi-role">Product Designer</div>
+          </div>
+        </div>
+
+        <!-- TESTIMONIAL 4 -->
+        <div class="testi-card">
+          <div class="testi-portrait">
+            <img src="/images/You-tech-imgs/jesse.jpg" alt="Student 4">
+          </div>
+          <div>
+            <div class="stars">★★★★★</div>
+            <blockquote class="testi-quote">"I came into You-Tech Africa's UI/UX programme with zero design background. I left with real skills, a portfolio, and the confidence to call myself a producct designer. Their curriculum is one of the best I've seen, well structured and fleible enugh for beginners and people refreshing their skills. Best decision I made for my career."</blockquote>
+            <div class="testi-name">Jesse Uwodi</div>
+            <div class="testi-role">Product Design Alumni</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAROUSEL NAVIGATION -->
+    <div class="testi-arrows">
+      <button class="testi-arrow prev" onclick="moveCarousel(-1)"></button>
+      <button class="testi-arrow next" onclick="moveCarousel(1)"></button>
+    </div>
+
+    <!-- DOT INDICATORS -->
+    <div class="testi-dot-indicator" id="testiDotIndicator">
+      <span class="testi-dot active" onclick="goToSlide(0)"></span>
+      <span class="testi-dot" onclick="goToSlide(1)"></span>
+      <span class="testi-dot" onclick="goToSlide(2)"></span>
+      <span class="testi-dot" onclick="goToSlide(3)"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ THREE PATHS ════════════════════════════════════════════ -->
+<section class="paths">
+  <div class="paths-header fade-in-up">
+    <p class="section-label">THERE'S A PLACE FOR YOU HERE</p>
+    <h2>Whether you're starting your journey or looking to give back</h2>
+    <p>You can be part of the You-Tech Africa mission and vision.</p>
+  </div>
+  <div class="paths-grid">
+    <div class="path-card fade-in-up stagger-1">
+      <div class="path-img">
+        <img src="/images/figma-img/unsplash_pHPzdEHN6Os.png">
+      </div>
+      <div class="path-body">
+        <h3>For Students</h3>
+        <p>Build real-world skills, gain practical skills, and take opportunities that transforms your future.</p>
+        <a href="contact.html" class="orange-link" onclick="event.preventDefault(); openApplicationForm('Student');">Apply Now →</a>
+      </div>
+    </div>
+    <div class="path-card fade-in-up stagger-2">
+      <div class="path-img">
+        <img src="/images/figma-img/tech-img03.jpg">
+      </div>
+      <div class="path-body">
+        <h3>For Mentors</h3>
+        <p>Share your knowledge, guide learners, and help shape the next generation of tech professionals in Africa.</p>
+        <a href="contact.html" class="orange-link" onclick="event.preventDefault(); openApplicationForm('Mentor');">Become A Mentor →</a>
+      </div>
+    </div>
+    <div class="path-card fade-in-up stagger-3">
+      <div class="path-img">
+        <img src="/images/figma-img/tech-img02.jpg">
+      </div>
+      <div class="path-body">
+        <h3>For Partners</h3>
+        <p>Collaborate with us to drive innovation, drive resources, and support the next generation of tech talent in Africa.</p>
+        <a href="contact.html" class="orange-link" onclick="event.preventDefault(); openApplicationForm('Partner');">Partner With Us →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ═══════════════════════════════════════════════════ -->
+<section class="faq">
+  <div class="faq-header fade-in-up">
+    <p class="section-label">GOT QUESTIONS? WE HAVE ANSWERS.</p>
+    <h2>Everything you need to know about getting started</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item fade-in-up stagger-1">
+      <div class="faq-q">Who can join You-Tech Africa? <span class="faq-icon">⌄</span></div>
+      <div class="faq-a">You-Tech Africa is open to young Africans between the ages of 16 and 25 who are passionate about learning tech skills, growing their careers, and gaining real-world experience.</div>
+    </div>
+    <div class="faq-item fade-in-up stagger-2">
+      <div class="faq-q">Do I need prior experience in tech to apply? <span class="faq-icon">⌄</span></div>
+      <div class="faq-a">No, prior experience is not required. Our programs are beginner-friendly and designed to guide learners from the fundamentals to practical application. </div>
+    </div>
+    <div class="faq-item fade-in-up stagger-3">
+      <div class="faq-q">What kind of skills can I learn? <span class="faq-icon">⌄</span></div>
+      <div class="faq-a">We offer training in Product Design, Frontend Development, Data Analysis, Product Management and other in-demand tech skills focused on preparing learners for the digital economy. </div>
+    </div>
+    <div class="faq-item fade-in-up stagger-4">
+      <div class="faq-q">Is there mentorship available? <span class="faq-icon">⌄</span></div>
+      <div class="faq-a">Yes. We provide mentorship, coaching, and internship opportunities where learners work on real-world projects and receive guidance from experienced professionals. </div>
+    </div>
+    <div class="faq-item fade-in-up stagger-1">
+      <div class="faq-q">Are the programs free or paid? <span class="faq-icon">⌄</span></div>
+      <div class="faq-a"> Our programs are scholarship-based and completely free. However, we require a small commitment fee to encourage accountability and active participation from learners throughout the programme. Full details are usually shared during each cohort application process. </div>
+    </div>
+    <div class="faq-item fade-in-up stagger-2">
+      <div class="faq-q">How do I join You-Tech Africa? <span class="faq-icon">⌄</span></div>
+      <div class="faq-a">You can join by applying through our website when applications for a new cohort are open. Follow our social media platforms and community channels for updates and announcements. </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FINAL CTA ══════════════════════════════════════════════ -->
+<section class="final-cta">
+  <div class="cta-box fade-in-up">
+    <p class="section-label">START YOUR JOURNEY WITH US TODAY</p>
+    <h2>At You-Tech Africa, you're not learning alone</h2>
+    <p>Join a growing community of young Africans building skills, gaining experience, and creating opportunities in the digital world.</p>
+    <div class="cta-btns">
+      <button class="btn-primary" onclick="openApplicationForm()">Apply Now →</button>
+      <button href="https://chat.whatsapp.com/IFiL8mY2Zr12xbhJTv595r?mode=gi_t" class="btn-outline" id="whatsappBtn">Join Our WhatsApp Community</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ═════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="navbar-brand" href="" title="logo">
+        <img src="./images/Utech 2.jpg" class="logo" alt="" width="100" height="100">
+      </a>
+      <p>Gain real-world skills, hands-on experience, and mentorship to launch your career in product design, frontend development, and beyond.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="index.html">Home / Menu</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Disclaimer</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Info</h4>
+      <ul>
+        <li>📞 +234 8035 174 814</li>
+        <li>✉️ youtechafricacontact@gmail.com</li>
+      </ul>
+      <div class="social-icons">
+        <a href="https://linkedin.com/company/utech-africa/" title="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://facebook.com" title="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com" title="Twitter" target="_blank"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://instagram.com/youtech_africa?utm_source=ig_web_button_share_sheet&igsh=ZDNIZDcOMzlxNw==" title="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://chat.whatsapp.com/IFiL8mY2Zr12xbhJTv595r?mode=gi_t" title="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 You-Tech Africa. All rights reserved.
+  </div>
+</footer>
+
+<!-- ══ APPLICATION MODAL WITH FORMSPREE ════════════════════ -->
+<div class="modal" id="applicationModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeApplicationForm()">✕</button>
+    <div class="modal-header">
+      <h2>Join You-Tech Africa</h2>
+    </div>
+    <div class="modal-description">
+      <p>Take the first step towards your tech career. Fill out this form and our team will review your application and reach out with next steps. Welcome to the community!</p>
+    </div>
+
+    <!-- Formspree Success/Error Messaging -->
+    <div data-fs-success style="display:none; padding:16px; background:#d1fae5; border:1px solid #6ee7b7; border-radius:8px; color:#065f46; margin-bottom:16px; font-weight:600;">
+      ✓ Thank you! We've received your application. Our team will review it and contact you within 24-48 hours. Welcome to the You-Tech Africa community! 🚀
+    </div>
+    <div data-fs-error style="display:none; padding:16px; background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; color:#991b1b; margin-bottom:16px; font-weight:600;"></div>
+
+    <form id="applicationForm" data-fs-form>
+      <div class="form-group">
+        <label for="fullName">Full Name *</label>
+        <input type="text" id="fullName" name="fullName" data-fs-field required>
+        <span data-fs-error="fullName" style="color:#dc2626; font-size:12px; display:block; margin-top:4px;"></span>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" data-fs-field required>
+        <span data-fs-error="email" style="color:#dc2626; font-size:12px; display:block; margin-top:4px;"></span>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number *</label>
+        <input type="tel" id="phone" name="phone" data-fs-field required>
+        <span data-fs-error="phone" style="color:#dc2626; font-size:12px; display:block; margin-top:4px;"></span>
+      </div>
+      <div class="form-group">
+        <label for="country">Country *</label>
+        <input type="text" id="country" name="country" data-fs-field required>
+        <span data-fs-error="country" style="color:#dc2626; font-size:12px; display:block; margin-top:4px;"></span>
+      </div>
+      <div class="form-group">
+        <label for="program">Program Interest *</label>
+        <select id="program" name="program" data-fs-field required>
+          <option value="">Select a program</option>
+          <option value="Product Design">Product Design</option>
+          <option value="Frontend Development">Frontend Development</option>
+          <option value="Data Analysis">Data Analysis</option>
+          <option value="Product Management">Product Management</option>
+          <option value="Not Sure Yet">Not Sure Yet</option>
+        </select>
+        <span data-fs-error="program" style="color:#dc2626; font-size:12px; display:block; margin-top:4px;"></span>
+      </div>
+      <div class="form-group">
+        <label for="experience">Experience Level *</label>
+        <select id="experience" name="experience" data-fs-field required>
+          <option value="">Select your level</option>
+          <option value="Beginner">Beginner (No experience)</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+        <span data-fs-error="experience" style="color:#dc2626; font-size:12px; display:block; margin-top:4px;"></span>
+      </div>
+      <div class="form-group">
+        <label for="message">Tell us about yourself</label>
+        <textarea id="message" name="message" placeholder="What's your story? Why do you want to join You-Tech Africa?"></textarea>
+      </div>
+      <button type="submit" class="form-submit" data-fs-submit-btn>Submit Application</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // ═════ CAROUSEL STATE ═════
+  let currentTestiSlide = 0;
+  const totalTestiSlides = 4;
+
+  // ═════ TESTIMONIAL CAROUSEL FUNCTION =====
+  function updateCarouselPosition() {
+    const track = document.getElementById('testiCarouselTrack');
+    const translateValue = -currentTestiSlide * 100;
+    track.style.transform = `translateX(${translateValue}%)`;
+
+    // Update dots
+    document.querySelectorAll('.testi-dot').forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentTestiSlide);
+    });
+  }
+
+  function moveCarousel(direction) {
+    currentTestiSlide = (currentTestiSlide + direction + totalTestiSlides) % totalTestiSlides;
+    updateCarouselPosition();
+  }
+
+  function goToSlide(index) {
+    currentTestiSlide = index;
+    updateCarouselPosition();
+  }
+
+  // Auto-slide testimonials every 8 seconds
+  setInterval(() => {
+    moveCarousel(1);
+  }, 8000);
+
+  // ═════ PAGE LOADER =====
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelector('.page-loader').style.opacity = '0';
+      document.querySelector('.page-loader').style.pointerEvents = 'none';
+    }, 2400);
+  });
+
+  // ═════ HAMBURGER MOBILE MENU =====
+  function toggleMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    navLinks.classList.toggle('active');
+    
+    if (navLinks.classList.contains('active')) {
+      hamburgerBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    } else {
+      hamburgerBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    }
+  }
+
+  function closeMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    navLinks.classList.remove('active');
+    hamburgerBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+  }
+
+  // ═════ SCROLL ANIMATIONS WITH INTERSECTION OBSERVER =====
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'none';
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.fade-in-up, .slide-in-left, .slide-in-right, .scale-in').forEach(el => {
+    observer.observe(el);
+  });
+
+  // ═════ NAVBAR GLASSMORPHISM =====
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // ═════ ANIMATED NUMBER COUNTERS =====
+  function animateCounters() {
+    const counters = document.querySelectorAll('.stat-num[data-target]');
+    
+    counters.forEach(counter => {
+      if (counter.dataset.animated) return;
+      
+      const target = parseInt(counter.dataset.target);
+      const duration = 2000;
+      const start = Date.now();
+      
+      const animate = () => {
+        const elapsed = Date.now() - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const current = Math.floor(target * progress);
+        
+        counter.textContent = current + (counter.textContent.includes('+') ? '+' : counter.textContent.includes('%') ? '%' : '');
+        
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          counter.dataset.animated = 'true';
+        }
+      };
+      
+      animate();
+    });
+  }
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounters();
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  const statsSection = document.querySelector('.stats');
+  if (statsSection) {
+    statsObserver.observe(statsSection);
+  }
+
+  // ═════ BUTTON RIPPLE EFFECT =====
+  function addRippleEffect(button) {
+    button.addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      ripple.style.left = (e.clientX - rect.left) + 'px';
+      ripple.style.top = (e.clientY - rect.top) + 'px';
+      this.appendChild(ripple);
+      
+      setTimeout(() => ripple.remove(), 600);
+    });
+  }
+
+  document.querySelectorAll('.btn-primary, .btn-nav, .btn-outline').forEach(btn => {
+    addRippleEffect(btn);
+  });
+
+  // ═════ CURSOR GLOW ON SERVICES SECTION =====
+  const servicesSection = document.querySelector('.services');
+  if (servicesSection) {
+    servicesSection.addEventListener('mousemove', (e) => {
+      const rect = servicesSection.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      servicesSection.style.setProperty('--mouse-x', x + '%');
+      servicesSection.style.setProperty('--mouse-y', y + '%');
+      servicesSection.classList.add('glow');
+    });
+
+    servicesSection.addEventListener('mouseleave', () => {
+      servicesSection.classList.remove('glow');
+    });
+  }
+
+  // ═════ FAQ ACCORDION =====
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // ═════ WHATSAPP EVENT LISTENER =====
+  document.getElementById('whatsappBtn').addEventListener('click', function() {
+    window.open('https://chat.whatsapp.com/IFiL8mY2Zr12xbhJTv595r?mode=gi_t', '_blank');
+  });
+
+  // ═════ APPLICATION FORM MODAL =====
+  function openApplicationForm(program = null) {
+    document.getElementById('applicationModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Auto-fill program if provided
+    if (program) {
+      const programSelect = document.getElementById('program');
+      const programMap = {
+        'Product Design': 'Product Design',
+        'Frontend Development': 'Frontend Development',
+        'Data Analysis': 'Data Analysis',
+        'Product Management': 'Product Management',
+        'Student': 'Not Sure Yet',
+        'Mentor': 'Not Sure Yet',
+        'Partner': 'Not Sure Yet'
+      };
+      
+      const mappedProgram = programMap[program] || program;
+      programSelect.value = mappedProgram;
+    }
+  }
+
+  function closeApplicationForm() {
+    document.getElementById('applicationModal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+
+  // ═════ FORMSPREE INITIALIZATION =====
+  window.formspree = window.formspree || function () { 
+    (formspree.q = formspree.q || []).push(arguments); 
+  };
+
+  // Notification System
+  function showNotification(message, type = 'success', duration = 5000) {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification-toast');
+    existingNotifications.forEach(notif => notif.remove());
+
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification-toast ${type}`;
+    
+    let icon = '';
+    if (type === 'success') icon = '✓ ';
+    if (type === 'error') icon = '✗ ';
+    if (type === 'info') icon = 'ℹ ';
+
+    notification.innerHTML = `
+      ${icon}${message}
+      <button class="notification-close" onclick="this.parentElement.remove()">✕</button>
+    `;
+    
+    document.body.appendChild(notification);
+
+    // Auto-remove after duration
+    setTimeout(() => {
+      if (notification.parentElement) {
+        notification.classList.add('fade-out');
+        setTimeout(() => notification.remove(), 400);
+      }
+    }, duration);
+  }
+
+  // Initialize Formspree form on DOM ready
+  document.addEventListener('DOMContentLoaded', () => {
+    formspree('initForm', { 
+      formElement: '#applicationForm', 
+      formId: 'xrevazbn'  // Your Formspree form ID
+    });
+    
+    // Handle form submission
+    const form = document.getElementById('applicationForm');
+    const submitBtn = form.querySelector('[data-fs-submit-btn]');
+    const originalBtnText = submitBtn.textContent;
+    
+    // Listen to form submission via Formspree events
+    form.addEventListener('submit', (e) => {
+      // Show loading notification
+      showNotification('Submitting your application...', 'info', 3000);
+    });
+
+    // Monitor form state for success
+    const checkFormSuccess = setInterval(() => {
+      // Check if success message is visible (Formspree displays this on success)
+      const successDiv = form.querySelector('[data-fs-success]');
+      
+      if (successDiv && successDiv.style.display !== 'none') {
+        // Form was successfully submitted!
+        clearInterval(checkFormSuccess);
+        
+        // Change button to green
+        submitBtn.classList.add('success');
+        submitBtn.innerHTML = '✓ Application Submitted!';
+        submitBtn.disabled = true;
+        
+        // Show success notification
+        showNotification('✓ Application submitted successfully! We\'ll contact you within 24-48 hours.', 'success', 6000);
+        
+        // Close modal after delay
+        setTimeout(() => {
+          closeApplicationForm();
+          
+          // Reset button state for next use
+          setTimeout(() => {
+            submitBtn.classList.remove('success');
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+            form.reset();
+          }, 500);
+        }, 2500);
+      }
+    }, 100);
+
+    // Stop checking after 10 seconds (in case something goes wrong)
+    setTimeout(() => {
+      clearInterval(checkFormSuccess);
+    }, 10000);
+  });
+
+  // ═════ CLOSE MODAL WHEN CLICKING OUTSIDE =====
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('applicationModal');
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target.id === 'applicationModal') {
+          closeApplicationForm();
+        }
+      });
+    }
+  });
+</script>
+
+<!-- Formspree AJAX Library CDN -->
+<script>
+  window.formspree = window.formspree || function () { 
+    (formspree.q = formspree.q || []).push(arguments); 
+  };
+  formspree('initForm', { 
+    formElement: '#applicationForm', 
+    formId: 'xrevazbn'
+  });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+</body>
+</html>

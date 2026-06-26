@@ -1,0 +1,2445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>You-Tech Africa – Raising Africa's Next Generation of Tech Innovators</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+/* 
+   CSS CUSTOM PROPERTIES / DESIGN TOKENS */
+:root {
+  --color-primary: #0B1437;
+  --color-accent: #F26522;
+  --color-accent-light: #FFF4EE;
+  --color-accent-mid: #FDDCCC;
+  --color-bg-light: #FFFFFF;
+  --color-bg-accent: #F9FAFB;
+  --color-text-dark: #0B1437;
+  --color-text-mid: #4A5568;
+  --color-text-light: #718096;
+  --color-border: #E2E8F0;
+  --color-card-bg: #FFFFFF;
+  --color-dark-card: #1A2340;
+  --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.1);
+  --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --nav-height: 68px;
+}
+
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  color: var(--color-text-dark);
+  background: var(--color-bg-light);
+  line-height: 1.6;
+  font-size: 15px; /* Scaled down base for the clean, compact SaaS look in screenshot */
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ═══════════════════════════════════════════
+   MODERN BRAND PRELOADER
+═══════════════════════════════════════════ */
+#page-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--color-primary);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+#page-loader.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.loader-logo-box {
+  width: 112px;
+  height: 112px;
+  background: white;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 3.2rem;
+  line-height: 1;
+  box-shadow: 0 12px 30px rgba(242, 101, 34, 0.15);
+  animation: logoPulse 2.2s infinite ease-in-out;
+}
+.loader-text {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #FFFFFF;
+  margin-top: 1.75rem;
+}
+.loader-progress-track {
+  width: 64px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  margin-top: 1.15rem;
+  overflow: hidden;
+  position: relative;
+}
+.loader-progress-bar {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 100%;
+  background: var(--color-accent);
+  transform-origin: left;
+  animation: progressLoad 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes logoPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+@keyframes progressLoad {
+  0% { transform: scaleX(0); }
+  50% { transform: scaleX(0.7); }
+  100% { transform: scaleX(1); }
+}
+
+/* ═══════════════════════════════════════════
+   WRAPPER / LAYOUT
+═══════════════════════════════════════════ */
+.wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ═══════════════════════════════════════════
+   STAGGERED SCROLL REVEAL ANIMATIONS
+═══════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  will-change: transform, opacity;
+  transition: opacity 0.8s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Stagger card layouts specifically */
+.values-grid .reveal, .services-grid .reveal, .team-grid .reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.values-grid .reveal.visible, .services-grid .reveal.visible, .team-grid .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════
+   UTILITY CLASSES & TAXONOMY ELEMENTS
+═══════════════════════════════════════════ */
+.text-orange { color: var(--color-accent); }
+
+/* Shimmer Effect on Gradient Key Words */
+.shimmer-text {
+  background: linear-gradient(to right, #F26522 20%, #ff9e6d 40%, #ff9e6d 60%, #F26522 80%);
+  background-size: 200% auto;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 4s linear infinite;
+}
+@keyframes textShimmer {
+  to { background-position: 200% center; }
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: var(--color-accent-light);
+  border: 1px solid var(--color-accent-mid);
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+}
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.75rem;
+}
+
+/* Base Interaction Buttons & Ripple Wrappers */
+.btn-primary, .btn-outline {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-family: var(--font);
+  font-size: .85rem;
+  font-weight: 700;
+  padding: .6rem 1.25rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition), transform 0.2s ease, box-shadow var(--transition), border-color var(--transition);
+  transform: translateZ(0);
+}
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+  border: 2px solid var(--color-accent);
+}
+.btn-primary:hover {
+  background: #D95510;
+  border-color: #D95510;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(242,101,34,.35);
+}
+.btn-primary:active, .btn-outline:active {
+  transform: translateY(1px) scale(0.98);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--color-accent);
+  border: 2px solid var(--color-accent);
+}
+.btn-outline:hover {
+  background: var(--color-accent);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* High Performance Ripple Canvas Elements */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: rippleEffect 0.6s linear;
+  background: rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+.btn-outline .ripple {
+  background: rgba(242, 101, 34, 0.2);
+}
+@keyframes rippleEffect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   NAVBAR (GLASSMORPHISM CONVERSION SYSTEM)
+═══════════════════════════════════════════ */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 999;
+  background: rgba(255, 255, 255, 1);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  transition: background 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), backdrop-filter 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-color: rgba(226, 232, 240, 0.5);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+}
+.navbar .wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+.logo-icon {
+  width: 44px;
+  height: 44px;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  flex: 1;
+  justify-content: center;
+}
+.nav-links a {
+  font-size: .88rem;
+  font-weight: 500;
+  color: var(--color-text-mid);
+  transition: color var(--transition);
+  position: relative;
+  padding: 0.4rem 0;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--color-accent); }
+
+/* Sliding Link Underlines */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.nav-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.nav-links a.active::after {
+  transform: scaleX(1);
+}
+
+.nav-cta { flex-shrink: 0; }
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: .25rem;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--color-text-dark);
+  border-radius: 2px;
+  transition: all var(--transition);
+}
+.hamburger.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.is-active span:nth-child(2) { opacity: 0; }
+.hamburger.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: var(--nav-height); left: 0; right: 0;
+  background: #fff;
+  border-bottom: 1px solid var(--color-border);
+  padding: 1.5rem;
+  z-index: 998;
+  flex-direction: column;
+  gap: 1rem;
+}
+.mobile-menu.is-active { display: flex; }
+.mobile-menu a {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  padding: .5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.mobile-menu a:last-child { border-bottom: none; }
+
+/* ═══════════════════════════════════════════
+   HERO SECTION (PARALLAX INTEGRATION ARCH)
+═══════════════════════════════════════════ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(var(--nav-height) + 4rem);
+  padding-bottom: 4.5rem;
+  text-align: center;
+  background: var(--color-bg-light);
+}
+.hero-parallax-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(242,101,34,0.06) 0%, transparent 50%),
+              radial-gradient(circle at 10% 80%, rgba(11,20,55,0.04) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform;
+}
+.hero .wrapper {
+  position: relative;
+  z-index: 2;
+}
+.hero h1 {
+  font-size: clamp(2rem, 4.5vw, 2.75rem); /* Compact proportional hero title matching desktop/mobile */
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--color-text-dark);
+  max-width: 800px;
+  margin: 0 auto 1.25rem;
+  letter-spacing: -.02em;
+}
+.hero-sub {
+  font-size: clamp(0.9rem, 1.5vw, 0.95rem); /* Clean modern readability */
+  color: var(--color-text-mid);
+  max-width: 620px;
+  margin: 0 auto 3rem;
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════
+   WHO WE ARE – SPLIT GRID & SMOOTH COVERS
+═══════════════════════════════════════════ */
+.who-we-are {
+  padding: 4.5rem 0;
+  background: var(--color-bg-light);
+}
+.who-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+.who-label {
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: .75rem;
+}
+.who-left h2 {
+  font-size: clamp(1.4rem, 2.8vw, 1.85rem); /* Perfectly balanced heading scale */
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--color-text-dark);
+  margin-bottom: 1.15rem;
+  max-width: 500px;
+}
+.who-left p {
+  font-size: .9rem; /* Perfectly scales down paragraph size to match image layout ratio */
+  color: var(--color-text-mid);
+  line-height: 1.7;
+  margin-bottom: 1.15rem;
+}
+.who-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: .75rem; }
+.who-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: .65rem;
+  font-size: .88rem; /* Small, tightly integrated list typography */
+  color: var(--color-text-mid);
+  line-height: 1.5;
+}
+.who-list li svg { flex-shrink: 0; margin-top: 2px; }
+.who-image-wrap {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: #e8e8e8;
+  position: relative;
+  aspect-ratio: 4/3;
+  transition: transform var(--transition);
+}
+.who-image-wrap:hover {
+  transform: scale(1.02);
+}
+.who-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Vision & Mission Cards */
+.vision-mission {
+  padding: 3.5rem 0;
+  background: var(--color-bg-light);
+}
+.vm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.vm-card {
+  padding: 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-light);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.vm-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.vm-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--color-accent-light);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.vm-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+  color: var(--color-text-dark);
+}
+.vm-card p {
+  font-size: .88rem;
+  color: var(--color-text-mid);
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════
+   CORE VALUES
+═══════════════════════════════════════════ */
+.core-values {
+  padding: 4.5rem 0;
+  background: var(--color-bg-accent);
+  text-align: center;
+}
+.section-header {
+  max-width: 720px;
+  margin: 0 auto 3rem;
+}
+.section-header h2 {
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+  font-weight: 800;
+  color: var(--color-text-dark);
+  line-height: 1.3;
+  letter-spacing: -.01em;
+}
+.section-header p {
+  font-size: .92rem;
+  color: var(--color-text-mid);
+  margin-top: .65rem;
+  line-height: 1.7;
+}
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+.value-card {
+  background: var(--color-card-bg);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  border: 1px solid var(--color-border);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.value-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-5px);
+}
+.value-icon {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+}
+.value-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+  color: var(--color-text-dark);
+}
+.value-card p {
+  font-size: .85rem;
+  color: var(--color-text-mid);
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════
+   SERVICES – DARK SECTION & CURSOR INTERACTION
+═══════════════════════════════════════════ */
+.services {
+  position: relative;
+  background: var(--color-primary);
+  padding: 4.5rem 0;
+  text-align: center;
+  overflow: hidden;
+}
+.services .section-label { color: var(--color-accent); }
+.services h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.01em;
+}
+.services > .wrapper > p {
+  font-size: .92rem;
+  color: rgba(255,255,255,.6);
+  margin-top: .5rem;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-top: 3rem;
+  text-align: left;
+}
+.service-card {
+  background: var(--color-dark-card);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.service-card:hover {
+  border-color: rgba(242,101,34,.6);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+.service-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+}
+.service-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+}
+.service-card p {
+  font-size: .85rem;
+  color: rgba(255,255,255,.55);
+  line-height: 1.65;
+  flex: 1;
+}
+.service-card a {
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  transition: gap var(--transition);
+}
+.service-card a:hover { gap: .6rem; }
+
+/* Interactive Cursor Glow Element */
+.cursor-glow-pad {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(242,101,34,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  will-change: left, top, opacity;
+  transition: opacity 0.4s ease;
+}
+.services .wrapper { position: relative; z-index: 1; }
+
+/* ═══════════════════════════════════════════
+   TEAM — SOCIAL ICONS RIGHT SIDE VERTICALLY
+═══════════════════════════════════════════ */
+.team {
+  padding: 4.5rem 0;
+  background: var(--color-bg-light);
+  text-align: center;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+  text-align: left;
+}
+.team-card { }
+
+/* Photo wrapper — position relative so overlay can sit on top */
+.team-photo {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  transition: transform var(--transition);
+  background: #f0f0f0;
+  position: relative;
+}
+.team-card:hover .team-photo {
+  transform: scale(1.02);
+}
+.team-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Dark gradient overlay — fades in on card hover */
+.team-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(11,20,55,0.72) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: var(--radius-md);
+  pointer-events: none;
+}
+.team-card:hover .team-photo::after {
+  opacity: 1;
+}
+
+/* Social links: absolute on the right edge of the photo, stacked vertically */
+.social-links {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%) translateX(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+}
+.team-card:hover .social-links {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+  pointer-events: auto;
+}
+
+/* Stagger each icon's entrance */
+.social-links .social-link:nth-child(1) { transition-delay: 0.04s; }
+.social-links .social-link:nth-child(2) { transition-delay: 0.09s; }
+.social-links .social-link:nth-child(3) { transition-delay: 0.14s; }
+
+.social-link {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: #0A66C2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.social-link:hover { transform: scale(1.15); box-shadow: 0 4px 14px rgba(0,0,0,0.4); }
+.social-link.sl-facebook { background: #1877F2; }
+.social-link.sl-twitter  { background: #000000; }
+.social-link.sl-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); }
+.social-link.sl-whatsapp  { background: #25D366; }
+.social-link.sl-youtube   { background: #FF0000; }
+
+/* Card body: just text now — no social column beside it */
+.team-card-body {
+  display: block;
+}
+.team-card-text {
+  flex: 1;
+  min-width: 0;
+}
+.team-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin-bottom: .2rem;
+}
+.team-card .role {
+  font-size: .8rem;
+  color: var(--color-text-light);
+  margin-bottom: .65rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+.team-card .bio {
+  font-size: .85rem;
+  color: var(--color-text-mid);
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════
+   IMPACT METRICS
+═══════════════════════════════════════════ */
+.impact {
+  padding: 4.5rem 0;
+  background: var(--color-bg-accent);
+  text-align: center;
+}
+.impact-intro { max-width: 640px; margin: 0 auto 3rem; }
+.impact-intro h2 {
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 800;
+  color: var(--color-text-dark);
+  line-height: 1.3;
+}
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.metric-item { text-align: center; }
+.metric-number {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  color: var(--color-text-dark);
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  display: block;
+}
+.metric-label {
+  font-size: .88rem;
+  color: var(--color-text-light);
+  margin-top: .5rem;
+}
+
+/* ═══════════════════════════════════════════
+   TESTIMONIALS — AUTO-PLAY CAROUSEL
+═══════════════════════════════════════════ */
+.testimonials {
+  padding: 4.5rem 0;
+  background: var(--color-bg-light);
+  text-align: center;
+}
+.testimonials-track-wrap {
+  overflow: hidden;
+  margin-top: 3rem;
+}
+.testimonials-track {
+  display: flex;
+  gap: 1.5rem;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.testimonial-card {
+  min-width: 280px;
+  flex: 0 0 280px;
+  background: var(--color-bg-accent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  text-align: left;
+}
+.t-user {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+.t-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.t-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.t-name {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+.t-role {
+  font-size: .78rem;
+  color: var(--color-text-light);
+}
+.t-quote {
+  font-size: .85rem;
+  color: var(--color-text-mid);
+  line-height: 1.65;
+  font-style: italic;
+}
+.testimonial-dots {
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+  margin-top: 2rem;
+}
+.t-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border);
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition), width var(--transition);
+  padding: 0;
+}
+.t-dot.active {
+  background: var(--color-accent);
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════
+   FAQ ACCORDION (HEIGHT TRANSITION ADJUSTMENTS)
+═══════════════════════════════════════════ */
+.faq {
+  padding: 4.5rem 0;
+  background: var(--color-bg-light);
+  text-align: center;
+}
+.faq-list {
+  max-width: 680px;
+  margin: 2.5rem auto 0;
+  text-align: left;
+}
+.faq-item {
+  border-bottom: 1px solid var(--color-border);
+}
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.15rem 0;
+  font-family: var(--font);
+  font-size: .92rem;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  cursor: pointer;
+  text-align: left;
+}
+.faq-question .faq-chevron {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--color-text-light);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-answer {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: height;
+}
+.faq-answer-inner {
+  padding: 0 0 1.15rem;
+  font-size: .88rem;
+  color: var(--color-text-mid);
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════
+   FINAL CTA BANNER
+═══════════════════════════════════════════ */
+.cta-banner {
+  padding: 4.5rem 0;
+  background: var(--color-bg-accent);
+}
+.cta-banner-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  background: linear-gradient(135deg, #FFF4EE 0%, #FDDCCC 40%, #FFF4EE 100%);
+  border-radius: var(--radius-lg);
+  padding: 3.5rem 2.5rem;
+  border: 1px solid var(--color-accent-mid);
+}
+.cta-banner-inner h2 {
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 800;
+  color: var(--color-text-dark);
+  line-height: 1.3;
+  margin: .75rem 0 1rem;
+}
+.cta-banner-inner p {
+  font-size: .9rem;
+  color: var(--color-text-mid);
+  line-height: 1.65;
+  margin-bottom: 2rem;
+}
+.cta-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ═══════════════════════════════════════════
+   APPLICATION DIALOG BOX (MODAL)
+═══════════════════════════════════════════ */
+.app-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 20, 55, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.app-modal-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.app-modal {
+  background: #fff;
+  width: 100%;
+  max-width: 540px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 2.5rem;
+  position: relative;
+  transform: translateY(30px) scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.app-modal-overlay.is-visible .app-modal {
+  transform: translateY(0) scale(1);
+}
+.app-modal-close {
+  position: absolute;
+  top: 1.5rem; right: 1.5rem;
+  background: none; border: none;
+  cursor: pointer; color: var(--color-text-light);
+  transition: color var(--transition);
+}
+.app-modal-close:hover { color: var(--color-accent); }
+.app-modal h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--color-primary); }
+.app-modal p { font-size: 0.9rem; color: var(--color-text-mid); margin-bottom: 1.5rem; }
+.form-group { margin-bottom: 1.25rem; text-align: left; }
+.form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--color-primary); }
+.form-control {
+  width: 100%; padding: 0.75rem 1rem; font-family: var(--font); font-size: 0.9rem;
+  border: 1px solid var(--color-border); border-radius: var(--radius-sm); outline: none;
+  transition: border-color var(--transition);
+  background: #fff;
+  color: var(--color-text-dark);
+}
+.form-control:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(242, 101, 34, 0.1); }
+
+/* Style select elements properly */
+select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F26522' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+select.form-control::-ms-expand {
+  display: none;
+}
+
+textarea.form-control { resize: vertical; min-height: 100px; }
+
+.form-error {
+  color: #dc2626;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: none;
+}
+
+.form-group.error .form-error {
+  display: block;
+}
+
+.form-group.error .form-control {
+  border-color: #dc2626;
+}
+
+/* ═══════════════════════════════════════════
+   SUCCESS DIALOG OVERLAY & MODAL
+═══════════════════════════════════════════ */
+.success-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 20, 55, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.success-dialog-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.success-dialog {
+  background: #fff;
+  width: 100%;
+  max-width: 420px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  padding: 3rem 2.5rem;
+  text-align: center;
+  transform: translateY(40px) scale(0.85);
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.success-dialog-overlay.is-visible .success-dialog {
+  transform: translateY(0) scale(1);
+}
+
+.success-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: successPulse 0.6s ease-out;
+}
+
+@keyframes successPulse {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-dialog h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.success-dialog p {
+  font-size: 0.95rem;
+  color: var(--color-text-mid);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+.success-dialog p strong {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.success-subtext {
+  font-size: 0.88rem !important;
+  color: var(--color-text-light) !important;
+}
+
+.success-ok-btn {
+  margin-top: 2rem;
+  width: 100%;
+  justify-content: center;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  background: var(--color-primary);
+  color: rgba(255,255,255,.75);
+  padding: 4rem 0 0;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+  gap: 3rem;
+  padding-bottom: 3rem;
+}
+.footer-brand p {
+  font-size: .85rem;
+  line-height: 1.75;
+  margin: 1rem 0 1.5rem;
+  max-width: 260px;
+}
+.footer-social {
+  display: flex;
+  gap: .6rem;
+}
+.f-social-link {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,.75);
+  transition: background var(--transition), color var(--transition), transform var(--transition);
+}
+.f-social-link:hover {
+  color: #fff;
+  transform: translateY(-2px);
+}
+.f-social-link.fs-linkedin:hover  { background: #0A66C2; }
+.f-social-link.fs-facebook:hover  { background: #1877F2; }
+.f-social-link.fs-twitter:hover   { background: #000000; }
+.f-social-link.fs-instagram:hover { background: #E1306C; }
+.f-social-link.fs-whatsapp:hover  { background: #25D366; }
+.footer-col h4 {
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 1.25rem;
+}
+.footer-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+}
+.footer-col ul a {
+  font-size: .87rem;
+  color: rgba(255,255,255,.6);
+  transition: color var(--transition);
+}
+.footer-col ul a:hover { color: var(--color-accent); }
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: .87rem;
+  color: rgba(255,255,255,.6);
+  margin-bottom: .65rem;
+}
+.footer-contact-item svg { flex-shrink: 0; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.1);
+  padding: 1.25rem 0;
+  text-align: center;
+  font-size: .82rem;
+  color: rgba(255,255,255,.4);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .values-grid { grid-template-columns: repeat(2, 1fr); }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .hamburger { display: flex; }
+  .who-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .vm-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .cta-banner-inner { padding: 2.5rem 1.5rem; }
+}
+@media (max-width: 540px) {
+  .values-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .cta-buttons { flex-direction: column; align-items: stretch; text-align: center; }
+  .testimonial-card { min-width: calc(100vw - 3rem); flex: 0 0 calc(100vw - 3rem); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════ BRAND PRELOADER ═══ -->
+<div id="page-loader" role="status" aria-live="polite" aria-label="Loading page content">
+  <div class="loader-content">
+    <div class="loader-logo-box">
+      <img src="./images/Utech with tagline.png" class="logo" alt="" width="100" height="100">
+    </div>
+    <div class="loader-text">Loading Experience</div>
+    <div class="loader-progress-track">
+      <div class="loader-progress-bar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ NAVBAR ═══ -->
+<header>
+  <nav class="navbar" id="mainNavbar" role="navigation" aria-label="Main navigation">
+    <div class="wrapper">
+      <a href="#" class="nav-logo" aria-label="You-Tech Africa home">
+        <img src="./images/Utech with tagline.png" class="logo" alt="" width="100" height="100">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link" data-section="home">Home</a></li>
+        <li><a href="about-us.html" class= "active" data-section="who-we-are">About Us</a></li>
+        <li><a href="service.html" class="nav-link" data-section="services">Services</a></li>
+        <li><a href="projects.html" class="nav-link" data-section="team">Projects</a></li>
+        <li><a href="contact.html" class="nav-link" data-section="faq">Contact Us</a></li>
+      </ul>
+      <div class="nav-cta">
+        <button class="btn-primary">Apply Now ›</button>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="about-us.html">About Us</a>
+    <a href="service.html">Services</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact Us</a>
+    <button class="btn-primary" style="justify-content:center;margin-top:.5rem;">Apply Now ›</button>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════ HERO ═══ -->
+<section class="hero" id="home">
+  <div class="hero-parallax-bg" id="heroParallax"></div>
+  <div class="wrapper">
+    <div class="badge reveal">ABOUT YOU-TECH AFRICA</div>
+    <h1 class="reveal reveal-delay-1">
+      Raising <span class="shimmer-text">Africa's</span> Next Generation<br>
+      of <span class="text-orange">Tech Innovators</span>
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      At You-Tech Africa, we believe every young African deserves access to opportunities that
+      can transform their future through technology. We are building a generation of skilled,
+      confident, and innovative young people equipped to thrive in the digital economy.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ WHO WE ARE ═══ -->
+<section class="who-we-are" id="who-we-are">
+  <div class="wrapper">
+    <div class="who-grid">
+      <div class="who-left reveal">
+        <p class="who-label">WHO WE ARE</p>
+        <h2>You-Tech Africa is a tech-driven capacity-building organisation</h2>
+        <p>focused on equipping young Africans with the skills, experience, and support they need to succeed in today's digital world.</p>
+        <p>We go beyond traditional learning by combining practical training, mentorship, and real-world projects to prepare you for actual career opportunities in tech.</p>
+        <ul class="who-list">
+          <li>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <circle cx="10" cy="10" r="9" stroke="#F26522" stroke-width="1.5"/>
+              <path d="M6 10.5l2.5 2.5L14 7.5" stroke="#F26522" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Practical hands-on training in UI/UX, Frontend, and Product Management.
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <circle cx="10" cy="10" r="9" stroke="#F26522" stroke-width="1.5"/>
+              <path d="M6 10.5l2.5 2.5L14 7.5" stroke="#F26522" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Direct mentorship from industry experts at global tech companies.
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <circle cx="10" cy="10" r="9" stroke="#F26522" stroke-width="1.5"/>
+              <path d="M6 10.5l2.5 2.5L14 7.5" stroke="#F26522" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Real-world project experience that builds professional portfolios.
+          </li>
+        </ul>
+      </div>
+      <div class="who-image-wrap reveal reveal-delay-2">
+        <img src="/images/You-tech-imgs/IMG_2588.jpeg" alt="You-Tech Africa team collaboration" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ VISION & MISSION ═══ -->
+<section class="vision-mission">
+  <div class="wrapper">
+    <div class="vm-grid">
+      <div class="vm-card reveal">
+        <div class="vm-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F26522" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+        </div>
+        <h3>Our Vision</h3>
+        <p>A continent where every young person has access to high-quality tech education, mentorship, and opportunities to innovate, lead, and create sustainable impact through technology.</p>
+      </div>
+      <div class="vm-card reveal reveal-delay-2">
+        <div class="vm-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F26522" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3>Our Mission</h3>
+        <p>To empower young Africans with practical tech skills, leadership development, and career-ready experiences that transform lives, communities, and futures.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ CORE VALUES ═══ -->
+<section class="core-values">
+  <div class="wrapper">
+    <div class="section-header reveal">
+      <p class="section-label">THE VALUES THAT DRIVE US</p>
+      <h2>Everything we do at You-Tech Africa is built on a foundation of growth, innovation, and impact.</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <div class="value-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <h3>Excellence</h3>
+        <p>Maintaining high standards in training and mentorship to build stellar careers.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>
+          </svg>
+        </div>
+        <h3>Innovation</h3>
+        <p>Promoting creativity and problem-solving to keep our curriculum ahead of the curve.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3>Impact</h3>
+        <p>Focusing on measurable change with outcomes that transform individual lives.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-3">
+        <div class="value-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        <h3>Collaboration</h3>
+        <p>Building strong networks and partnerships because growth happens together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ SERVICES ═══ -->
+<section class="services" id="services">
+  <div class="cursor-glow-pad" id="srvGlow"></div>
+  <div class="wrapper">
+    <p class="section-label">WHAT WE OFFER</p>
+    <h2>Our Services</h2>
+    <p>Everything you need to launch and grow your tech career and business.</p>
+    <div class="services-grid">
+      <article class="service-card reveal">
+        <div class="service-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <h3>Training</h3>
+        <p>Hands-on, project-based training programmes designed to give you industry-ready skills in today's most in-demand tech roles.</p>
+        <a href="about-us.html">Learn More ›</a>
+      </article>
+      <article class="service-card reveal reveal-delay-1">
+        <div class="service-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        <h3>Mentorship / Internship</h3>
+        <p>Get guided by experienced professionals and work on real projects through our structured mentorship and internship placements.</p>
+        <a href="about-us.html">Learn More ›</a>
+      </article>
+      <article class="service-card reveal reveal-delay-2">
+        <div class="service-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </div>
+        <h3>Recruitment Services</h3>
+        <p>We connect skilled African tech talent with local and global companies actively looking to hire, bridging the gap between talent and opportunity.</p>
+        <a href="about-us.html">Learn More ›</a>
+      </article>
+      <article class="service-card reveal reveal-delay-3">
+        <div class="service-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <h3>IT &amp; Product Services</h3>
+        <p>We help businesses build and ship digital products — from web applications and design systems to end-to-end product development.</p>
+        <a href="about-us.html">Learn More ›</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ TEAM ═══ -->
+<section class="team" id="team">
+  <div class="wrapper">
+    <p class="section-label reveal">YOU-TECH AFRICA TEAM</p>
+    <div class="section-header reveal">
+      <h2>Meet the Team</h2>
+      <p>Meet our team of professionals to serve you</p>
+    </div>
+    <div class="team-grid">
+
+      <!-- Team Member 1 -->
+      <article class="team-card reveal">
+        <div class="team-photo">
+          <img src="/images/You-tech-imgs/ngozi.jpg" alt="Ngozi Kolapo - Founder & Programme Co-ordinator" />
+        </div>
+        <div class="team-card-body">
+          <div class="team-card-text">
+            <h3>Ngozi Kolapo</h3>
+            <p class="role">Founder &amp; Programme Co-ordinator</p>
+            <p class="bio">Ngozi Kolapo is a passionate product Designer, UI/UX Trainer and capacity development specialist.</p>
+          </div>
+          <div class="social-links">
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/ngozi-uwalaka-kolapo" class="social-link" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            <!-- X / Twitter -->
+            <a href="#" class="social-link sl-twitter" aria-label="X / Twitter">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a href="#" class="social-link sl-instagram" aria-label="Instagram">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Team Member 2 -->
+      <article class="team-card reveal reveal-delay-1">
+        <div class="team-photo">
+          <img src="/images/You-tech-imgs/obinna.jpg" alt="Obinna Ndulue - Product Design Trainer" />
+        </div>
+        <div class="team-card-body">
+          <div class="team-card-text">
+            <h3>Obinna Ndulue</h3>
+            <p class="role">Product Design Trainer</p>
+            <p class="bio">Obinna Ndulue is a skilled product designer passionate about creating user centered digital experiences.</p>
+          </div>
+          <div class="social-links">
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/ndulueobinna" class="social-link" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            <!-- X / Twitter -->
+            <a href="#" class="social-link sl-twitter" aria-label="X / Twitter">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a href="#" class="social-link sl-instagram" aria-label="Instagram">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Team Member 3 -->
+      <article class="team-card reveal reveal-delay-2">
+        <div class="team-photo">
+          <img src="/images/You-tech-imgs/tisloh.jpg" alt="Peter Bot Tishoh - Frontend Development Trainer" />
+        </div>
+        <div class="team-card-body">
+          <div class="team-card-text">
+            <h3>Peter Bot Tishoh</h3>
+            <p class="role">Frontend Development Trainer</p>
+            <p class="bio">Tishoh Bot is a dedicated frontend developer with a passion for building responsive, user friendly and high-performing web applications.</p>
+          </div>
+          <div class="social-links">
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/tisloh-bot-811351385" class="social-link" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            <!-- X / Twitter -->
+            <a href="#" class="social-link sl-twitter" aria-label="X / Twitter">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a href="#" class="social-link sl-instagram" aria-label="Instagram">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ IMPACT ═══ -->
+<section class="impact">
+  <div class="wrapper">
+    <div class="impact-intro reveal">
+      <p class="section-label">OUR IMPACT</p>
+      <h2>We measure success by the growth and achievements of our community.</h2>
+    </div>
+    <div class="metrics-grid">
+      <div class="metric-item reveal">
+        <span class="metric-number" data-count-target="300">0</span>
+        <p class="metric-label">Students Trained</p>
+      </div>
+      <div class="metric-item reveal reveal-delay-1">
+        <span class="metric-number" data-count-target="100">0</span>
+        <p class="metric-label">Interns placed in real-world projects</p>
+      </div>
+      <div class="metric-item reveal reveal-delay-2">
+        <span class="metric-number" data-count-target="80" data-suffix="%">0</span>
+        <p class="metric-label">Career advancement rate among participants</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ TESTIMONIALS ═══ -->
+<section class="testimonials" id="testimonials">
+  <div class="wrapper">
+    <p class="section-label reveal">TESTIMONIALS</p>
+    <div class="section-header reveal">
+      <h2>What Our Students Say</h2>
+      <p>Our learners are building portfolios, securing opportunities, and growing into confident tech professionals.</p>
+    </div>
+    <div class="testimonials-track-wrap">
+      <div class="testimonials-track" id="testimonialTrack">
+        <div class="testimonial-card">
+          <div class="t-user">
+            <div class="t-avatar">
+              <img src="/images/You-tech-imgs/test-img.jpg" alt="Chima Worlu" />
+            </div>
+            <div>
+              <p class="t-name">Chima Worlu</p>
+              <p class="t-role">Product Design Alumni</p>
+            </div>
+          </div>
+          <p class="t-quote">"Honestly, before joining You-Tech Africa, I didn't know much about UX. But now I know the real meaning of product design and UX, and I'm motivated to continue learning deeply on my own through personal study and practice, all thanks to You-Tech Afica."</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-user">
+            <div class="t-avatar">
+              <img src="/images/You-tech-imgs/ifeanyi.jpg" alt="Ifeanyi Emmanuel" />
+            </div>
+            <div>
+              <p class="t-name">Ifeanyi Emmanuel</p>
+              <p class="t-role">Frontend Developer Intern</p>
+            </div>
+          </div>
+          <p class="t-quote">"The frontend development program gave me practical skills that I immediately applied in my projects. I went from knowing nothing about coding to building responsive websites in just 16 weeks!"</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-user">
+            <div class="t-avatar">
+              <img src="/images/You-tech-imgs/ufuoma.png" alt="Comfort Ologbo" />
+            </div>
+            <div>
+              <p class="t-name">Comfort Ologbo</p>
+              <p class="t-role">Product Design Intern</p>
+            </div>
+          </div>
+          <p class="t-quote">"You-Tech Africa has been an important part of my growth journey as a product designer. Through hands-on projects, collaboration , and mentorship, I gained practical experience that helped me strengthen my skills and approach design with more confidence."</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-user">
+            <div class="t-avatar">
+              <img src="/images/You-tech-imgs/jesse.jpg" alt="Jesse Uwodi" />
+            </div>
+            <div>
+              <p class="t-name">Jesse Uwodi</p>
+              <p class="t-role">UI/UX Design Intern</p>
+            </div>
+          </div>
+          <p class="t-quote">"I came into You-Tech Africa's UI/UX programme with zero design background. I left with real skills, a portfolio, and the confidence to call myself a producct designer. Their curriculum is one of the best I've seen, well structured and fleible enugh for beginners and people refreshing their skills. Best decision I made for my career."</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-user">
+            <div class="t-avatar">
+              <img src="/images/You-tech-imgs/lan.jpg" alt="Abiodun Lanre" />
+            </div>
+            <div>
+              <p class="t-name">Abiodun Lanre</p>
+              <p class="t-role">Frontend Development Intern</p>
+            </div>
+          </div>
+          <p class="t-quote">"You-Tech provided a community that kept me accountable. I'm more consistent and confident in my skills than ever before."</p>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-dots" id="testimonialDots" role="tablist" aria-label="Testimonial navigation"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ FAQ ═══ -->
+<section class="faq" id="faq">
+  <div class="wrapper">
+    <p class="section-label reveal">GOT QUESTIONS? WE'VE GOT ANSWERS</p>
+    <div class="section-header reveal">
+      <h2>Everything you need to know about getting started</h2>
+    </div>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Who can join You-Tech Africa?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+You-Tech Africa is open to young Africans between the ages of 16 and 25 who are passionate about learning tech skills, growing their careers, and gaining real-world experience.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Do I need prior experience in tech to apply?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            No, prior experience is not required. Our programs are beginner-friendly and designed to guide learners from the fundamentals to practical application.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          What kind of skills can I learn?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            We offer training in Product Design, Frontend Development, Data Analysis, Product Management and other in-demand tech skills focused on preparing learners for the digital economy.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Is there mentorship available?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+           Yes. We provide mentorship, coaching, and internship opportunities where learners work on real-world projects and receive guidance from experienced professionals.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Are the programs free or paid?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            Our programs are scholarship-based and completely free. However, we require a small commitment fee to encourage accountability and active participation from learners throughout the programme. Full details are usually shared during each cohort application process.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          How do I join You-Tech Africa?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">
+            You can join by applying through our website when applications for a new cohort are open. Follow our social media platforms and community channels for updates and announcements.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ CTA BANNER ═══ -->
+<section class="cta-banner" id="cta">
+  <div class="wrapper">
+    <div class="cta-banner-inner reveal">
+      <p class="section-label">START YOUR JOURNEY INTO TECH TODAY</p>
+      <h2>At You-Tech Africa, you're not learning alone</h2>
+      <p>Join a growing community of young Africans building skills, gaining experience, and creating opportunities in the digital world.</p>
+      <div class="cta-buttons">
+        <button class="btn-primary">Apply Now ›</button>
+        <a href="https://chat.whatsapp.com/IFiL8mY2Zr12xbhJTv595r?mode=gi_t" class="btn-outline">Join Our WhatsApp Community</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ MODAL CONTAINER DOM ═══ -->
+<div class="app-modal-overlay" id="appModalOverlay">
+  <div class="app-modal" role="dialog" aria-modal="true">
+    <button class="app-modal-close" id="closeModalBtn" aria-label="Close modal">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <h3>Begin Your Tech Journey</h3>
+    <p>Fill out this form and our admissions team will contact you within 48 hours.</p>
+    
+    <form id="applicationForm" novalidate>
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="fullName" class="form-control" placeholder="John Doe" required>
+        <span class="form-error">Please enter your full name</span>
+      </div>
+      <div class="form-group">
+        <label for="emailAddr">Email Address</label>
+        <input type="email" id="emailAddr" name="emailAddr" class="form-control" placeholder="john@example.com" required>
+        <span class="form-error">Please enter a valid email address</span>
+      </div>
+      <div class="form-group">
+        <label for="phoneNum">Phone Number</label>
+        <input type="tel" id="phoneNum" name="phoneNum" class="form-control" placeholder="+234 800 000 0000" required>
+        <span class="form-error">Please enter your phone number</span>
+      </div>
+      <div class="form-group">
+        <label for="trackSelect">Select Course Track</label>
+        <select id="trackSelect" name="courseTrack" class="form-control" required>
+          <option value="">Choose a path...</option>
+          <option value="uiux">UI/UX Product Design</option>
+          <option value="frontend">Frontend Development</option>
+          <option value="pm">Product Management</option>
+        </select>
+        <span class="form-error">Please select a course track</span>
+      </div>
+      <div class="form-group">
+        <label for="programSelect">Select Program Delivery</label>
+        <select id="programSelect" name="programDelivery" class="form-control" required>
+          <option value="">Choose program layout...</option>
+          <option value="fulltime">Beginner</option>
+          <option value="parttime">Immediate</option>
+          <option value="remote">Experienced</option>
+        </select>
+        <span class="form-error">Please select a program delivery method</span>
+      </div>
+      <div class="form-group">
+        <label for="appDescription">Why are you applying for this program?</label>
+        <textarea id="appDescription" name="appDescription" class="form-control" placeholder="Tell us about your tech background and career aspirations..." required></textarea>
+        <span class="form-error">Please tell us why you're applying</span>
+      </div>
+      <button type="submit" id="submitAppBtn" class="btn-primary" style="width:100%; justify-content:center; margin-top:1rem;">Submit Application</button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ FOOTER ═══ -->
+<footer>
+  <div class="wrapper">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" aria-label="You-Tech Africa home">
+          <img src="./images/Utech 2.jpg" class="logo" alt="" width="100" height="100">
+        </a>
+        <p>Gain real-world tech skills, hands-on experience, and mentorship to launch your career in product design, development, and beyond.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">How It Works</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="about-us.html">About Us</a></li>
+          <li><a href="service.html">Services</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Disclaimer</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Info</h4>
+        <div class="footer-contact-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 010 1.17 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.72 6.72l1.27-.76a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          +234 8035 174 814
+        </div>
+        <div class="footer-contact-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          youtechafricacontact@gmail.com
+        </div>
+
+        <div class="footer-social">
+          <!-- LinkedIn -->
+          <a href="https://linkedin.com/company/utech-africa/" class="f-social-link fs-linkedin" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+          <!-- Facebook -->
+          <a href="#" class="f-social-link fs-facebook" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+          <!-- X / Twitter -->
+          <a href="#" class="f-social-link fs-twitter" aria-label="X / Twitter">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <!-- Instagram -->
+          <a href="https://instagram.com/youtech_africa?utm_source=ig_web_button_share_sheet&igsh=ZDNIZDcOMzlxNw==" class="f-social-link fs-instagram" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+          </a>
+          <!-- WhatsApp -->
+          <a href="https://chat.whatsapp.com/IFiL8mY2Zr12xbhJTv595r?mode=gi_t" class="f-social-link fs-whatsapp" aria-label="WhatsApp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="wrapper">
+      <p>© Copyright You-Tech Africa, 2026.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════ JAVASCRIPT ═══ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── 1. PRELOADER TERMINATION (MODERATE LOAD TIME) ── */
+  window.addEventListener('load', () => {
+    const preloader = document.getElementById('page-loader');
+    // Generates a deliberate, polished transition window
+    setTimeout(() => {
+      preloader.classList.add('fade-out');
+    }, 1500);
+  });
+
+  /* ── 2. HAMBURGER / MOBILE NAVIGATION MENU ── */
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = hamburger.classList.toggle('is-active');
+    mobileMenu.classList.toggle('is-active', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  mobileMenu.querySelectorAll('a, button').forEach(item => {
+    item.addEventListener('click', () => {
+      hamburger.classList.remove('is-active');
+      mobileMenu.classList.remove('is-active');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+ /* ── 3. NAVBAR ACTIVE LINK HANDLER (FIXED) ── */
+// const navLinks = document.querySelectorAll('.nav-link');
+// const sections = document.querySelectorAll('section[id]');
+
+// function updateActiveLink() {
+//   let current = '';
+//   const scrollMid = window.scrollY + window.innerHeight / 2;
+
+//   sections.forEach(section => {
+//     const sectionTop = section.offsetTop;
+//     const sectionBottom = sectionTop + section.offsetHeight;
+//     if (scrollMid >= sectionTop && scrollMid < sectionBottom) {
+//       current = section.getAttribute('id');
+//     }
+//   });
+
+//   navLinks.forEach(link => {
+//     link.classList.remove('active');
+//     if (link.getAttribute('data-section') === current) {
+//       link.classList.add('active');
+//     }
+//   });
+// }
+
+// window.addEventListener('scroll', updateActiveLink, { passive: true });
+// updateActiveLink();
+
+  /* ── 4. APPLICATION MODAL MATRIX ENGINE ── */
+  const overlay = document.getElementById('appModalOverlay');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const applicationForm = document.getElementById('applicationForm');
+  
+  function openModal() {
+    overlay.classList.add('is-visible');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeModal() {
+    overlay.classList.remove('is-visible');
+    document.body.style.overflow = '';
+  }
+
+  document.body.addEventListener('click', (e) => {
+    if (e.target.closest('.btn-primary') && e.target.textContent.includes('Apply Now')) {
+      openModal();
+    }
+  });
+
+  closeModalBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
+  window.addEventListener('keydown', (e) => { if(e.key === 'Escape' && overlay.classList.contains('is-visible')) closeModal(); });
+
+  /* ── 4B. FORM VALIDATION & SUBMISSION WITH FORMSPREE INTEGRATION ── */
+  if (applicationForm) {
+    applicationForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      // Validate form
+      let isValid = true;
+      const formGroups = this.querySelectorAll('.form-group');
+      const submitBtn = document.getElementById('submitAppBtn');
+      const originalBtnText = submitBtn.textContent;
+      
+      formGroups.forEach(group => {
+        const input = group.querySelector('.form-control');
+        group.classList.remove('error');
+        
+        if (!input.value.trim()) {
+          isValid = false;
+          group.classList.add('error');
+        } else if (input.type === 'email' && !isValidEmail(input.value)) {
+          isValid = false;
+          group.classList.add('error');
+        }
+      });
+
+      if (!isValid) {
+        alert('Please fill out all fields correctly.');
+        return;
+      }
+
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      const formData = new FormData(this);
+      const fullName = formData.get('fullName');
+
+      // Submit to FormSpree
+      fetch('https://formspree.io/f/xrevazbn', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          fullName: formData.get('fullName'),
+          emailAddr: formData.get('emailAddr'),
+          phoneNum: formData.get('phoneNum'),
+          courseTrack: formData.get('courseTrack'),
+          programDelivery: formData.get('programDelivery'),
+          appDescription: formData.get('appDescription')
+        })
+      })
+      .then(response => {
+        if (response.ok) {
+          // Show success dialog
+          showSuccessDialog(fullName);
+          this.reset();
+          closeModal();
+        } else {
+          throw new Error('Form submission failed');
+        }
+      })
+      .catch(error => {
+        console.error('Submission error:', error);
+        alert('There was an error submitting your application. Please try again.');
+      })
+      .finally(() => {
+        // Restore button state
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+      });
+    });
+  }
+
+  /* ── 4C. SUCCESS DIALOG SYSTEM ── */
+  function showSuccessDialog(studentName) {
+    // Create success dialog HTML
+    const successDialog = document.createElement('div');
+    successDialog.className = 'success-dialog-overlay';
+    successDialog.innerHTML = `
+      <div class="success-dialog">
+        <div class="success-icon">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+            <circle cx="28" cy="28" r="27" stroke="#F26522" stroke-width="2"/>
+            <path d="M18 28l6 6 14-14" stroke="#F26522" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Application Received!</h3>
+        <p>Hi <strong>${studentName}</strong>, thank you for applying to You-Tech Africa.</p>
+        <p class="success-subtext">We've received your application and will review it carefully. Our admissions team will contact you within 48 hours.</p>
+        <button class="btn-primary success-ok-btn">Got it!</button>
+      </div>
+    `;
+
+    document.body.appendChild(successDialog);
+    
+    // Trigger animation
+    setTimeout(() => {
+      successDialog.classList.add('is-visible');
+    }, 50);
+
+    // Handle close
+    const closeBtn = successDialog.querySelector('.success-ok-btn');
+    closeBtn.addEventListener('click', () => {
+      successDialog.classList.remove('is-visible');
+      setTimeout(() => successDialog.remove(), 300);
+    });
+
+    // Close on backdrop click
+    successDialog.addEventListener('click', (e) => {
+      if (e.target === successDialog) {
+        successDialog.classList.remove('is-visible');
+        setTimeout(() => successDialog.remove(), 300);
+      }
+    });
+
+    // Close on Escape
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        successDialog.classList.remove('is-visible');
+        setTimeout(() => {
+          successDialog.remove();
+          window.removeEventListener('keydown', handleEscape);
+        }, 300);
+      }
+    };
+    window.addEventListener('keydown', handleEscape);
+  }
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  /* ── 5. GLASSMORPHISM NAVBAR SWITCH ── */
+  const navbar = document.getElementById('mainNavbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  /* ── 6. FLUID HEIGHT FAQ ACCORDION ENGINE ── */
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const btn = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+
+      faqItems.forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-answer').style.height = '0px';
+        i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.height = answer.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* ── 7. STATISTICAL NUMBER COUNTER SUB-SYSTEM ── */
+  const countNumbers = document.querySelectorAll('.metric-number');
+  const initCounter = (el) => {
+    const target = parseInt(el.getAttribute('data-count-target'), 10);
+    const suffix = el.getAttribute('data-suffix') || '';
+    let start = 0;
+    const duration = 1500;
+    const startTime = performance.now();
+
+    const updateCount = (timestamp) => {
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const easeQuadOut = progress * (2 - progress);
+      const current = Math.floor(easeQuadOut * target);
+      el.textContent = current + suffix;
+      
+      if (progress < 1) {
+        requestAnimationFrame(updateCount);
+      } else {
+        el.textContent = target + suffix;
+      }
+    };
+    requestAnimationFrame(updateCount);
+  };
+
+  /* ── 8. STAGGERED SCROLL REVEALS ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          
+          const counterEl = entry.target.querySelector('.metric-number');
+          if (counterEl) initCounter(counterEl);
+          
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  revealEls.forEach(el => observer.observe(el));
+
+  /* ── 9. HERO LAYER PARALLAX ENGINE ── */
+  const heroParallax = document.getElementById('heroParallax');
+  window.addEventListener('scroll', () => {
+    const depth = window.scrollY;
+    heroParallax.style.transform = `translateY(${depth * 0.35}px)`;
+  }, { passive: true });
+
+  /* ── 10. SERVICES WORKSPACE CURSOR GLOW ── */
+  const srvBlock = document.getElementById('services');
+  const srvGlow = document.getElementById('srvGlow');
+
+  if (window.matchMedia('(min-width: 1024px)').matches) {
+    srvBlock.addEventListener('mousemove', (e) => {
+      const bounds = srvBlock.getBoundingClientRect();
+      const x = e.clientX - bounds.left;
+      const y = e.clientY - bounds.top;
+      srvGlow.style.left = `${x}px`;
+      srvGlow.style.top = `${y}px`;
+    });
+    srvBlock.addEventListener('mouseenter', () => srvGlow.style.opacity = '1');
+    srvBlock.addEventListener('mouseleave', () => srvGlow.style.opacity = '0');
+  }
+
+  /* ── 11. MATERIAL DESIGN RIPPLE ENGINE ── */
+  document.body.addEventListener('click', (e) => {
+    const targetButton = e.target.closest('.btn-primary, .btn-outline');
+    if (!targetButton) return;
+
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    
+    const rect = targetButton.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = `${size}px`;
+    
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top - size / 2;
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+
+    targetButton.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+  });
+
+  /* ── 12. TESTIMONIAL CAROUSEL — AUTO-PLAY ENGINE (MOVES ONE CARD AT A TIME) ── */
+  const track = document.getElementById('testimonialTrack');
+  const dotsContainer = document.getElementById('testimonialDots');
+  const cards = track.querySelectorAll('.testimonial-card');
+  const trackWrap = document.querySelector('.testimonials-track-wrap');
+  const CARD_GAP = 24; // matches the 1.5rem gap set on .testimonials-track
+
+  let currentIndex = 0;
+  let autoPlayInterval = null;
+  // metrics.maxIndex is the highest valid scroll position so the track never
+  // slides past the last card and leaves blank space (the original bug).
+  let metrics = { cardWidth: 0, visibleCount: 1, maxIndex: cards.length - 1 };
+
+  // Recalculates how many cards fit in the visible wrapper at the current
+  // screen size, and the last index the carousel is allowed to scroll to.
+  function updateMetrics() {
+    const wrapWidth = trackWrap.clientWidth;
+    const cardWidth = cards[0].getBoundingClientRect().width;
+    const visibleCount = Math.max(1, Math.round((wrapWidth + CARD_GAP) / (cardWidth + CARD_GAP)));
+    const maxIndex = Math.max(0, cards.length - visibleCount);
+    metrics = { cardWidth, visibleCount, maxIndex };
+  }
+
+  function buildDots() {
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i <= metrics.maxIndex; i++) {
+      const dot = document.createElement('button');
+      dot.className = 't-dot' + (i === currentIndex ? ' active' : '');
+      dot.setAttribute('aria-label', `Go to testimonial ${i + 1}`);
+      dot.setAttribute('role', 'button');
+      dot.addEventListener('click', () => {
+        goTo(i);
+        resetAutoPlay();
+      });
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function goTo(index) {
+    currentIndex = Math.max(0, Math.min(index, metrics.maxIndex));
+    const offset = currentIndex * (metrics.cardWidth + CARD_GAP);
+    track.style.transform = `translateX(-${offset}px)`;
+
+    dotsContainer.querySelectorAll('.t-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === currentIndex);
+    });
+  }
+
+  function nextSlide() {
+    const next = currentIndex >= metrics.maxIndex ? 0 : currentIndex + 1;
+    goTo(next);
+  }
+
+  // Auto playback settings
+  function startAutoPlay() {
+    autoPlayInterval = setInterval(nextSlide, 3500);
+  }
+
+  function stopAutoPlay() {
+    clearInterval(autoPlayInterval);
+    autoPlayInterval = null;
+  }
+
+  function resetAutoPlay() {
+    stopAutoPlay();
+    startAutoPlay();
+  }
+
+  updateMetrics();
+  buildDots();
+  goTo(currentIndex);
+  startAutoPlay();
+
+  // Pause auto-play on hover; resume on mouse leave (desktop pointer devices)
+  trackWrap.addEventListener('mouseenter', stopAutoPlay);
+  trackWrap.addEventListener('mouseleave', startAutoPlay);
+
+  // Swipe support: drag left/right to move exactly one card at a time
+  let touchStartX = 0;
+  let touchDeltaX = 0;
+
+  trackWrap.addEventListener('touchstart', (e) => {
+    stopAutoPlay();
+    touchStartX = e.touches[0].clientX;
+    touchDeltaX = 0;
+  }, { passive: true });
+
+  trackWrap.addEventListener('touchmove', (e) => {
+    touchDeltaX = e.touches[0].clientX - touchStartX;
+  }, { passive: true });
+
+  trackWrap.addEventListener('touchend', () => {
+    const SWIPE_THRESHOLD = 40;
+    if (Math.abs(touchDeltaX) > SWIPE_THRESHOLD) {
+      if (touchDeltaX < 0) {
+        goTo(currentIndex + 1);
+      } else {
+        goTo(currentIndex - 1);
+      }
+    }
+    touchDeltaX = 0;
+    setTimeout(startAutoPlay, 1000);
+  }, { passive: true });
+
+  // Recalculate on resize so the carousel stays correct on any device/orientation
+  let resizeDebounce = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeDebounce);
+    resizeDebounce = setTimeout(() => {
+      updateMetrics();
+      buildDots();
+      goTo(currentIndex);
+    }, 150);
+  });
+
+})();
+</script>
+</body>
+</html>
